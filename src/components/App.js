@@ -1,11 +1,75 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import Style from '../style/style'
+import React from 'react';
+import { View, Text, Button } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
-export default function App(){
-  return(
-    <View style={Style.main}>
-      <Text>Hello World!</Text>
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+function Home() {
+  return (
+    <View>
+      <Text>Home</Text>
     </View>
+  );
+}
+
+function DividaPage({ navigation }) {
+  return (
+    <View>
+      <Text>Teste</Text>
+      <Button title="Voltar" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
+
+function CriarDivida() {
+  const navigation = useNavigation();
+  return (
+    <View style={{flex: 1, justifyContent:'center'}}>
+      <Button title="Teste" onPress={() => navigation.navigate('DividaPage')} />
+    </View>
+  );
+}
+
+function Perfil() {
+  return (
+    <View>
+      <Text>Página de perfil</Text>
+    </View>
+  );
+}
+
+function RootStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Tela de Dívida" component={DividaPage} />
+    </Stack.Navigator>
+  );
+}
+
+function RootTab() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen
+        name="DividaPage"
+        component={RootStack}
+        options={{
+          tabBarButton: () => <CriarDivida />,
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen name="Perfil" component={Perfil} />
+    </Tab.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <RootTab />
+    </NavigationContainer>
   );
 }
