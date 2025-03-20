@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{ useState } from 'react'
 import { TextInput, Text, View, Button, useState } from 'react-native'
 
 export default function CriarDividaPage(){
@@ -8,14 +8,26 @@ const [dividaList, setDividaList] = useState([])
         <View>
             <Text>Insira os dados da sua dívida</Text>
             <Text>Nome</Text>
-            <TextInput />
+            <TextInput 
+            onChangeText={setDivida}
+            value={divida}
+            />
             <Text>Descrição</Text>
-            <TextInput />
-            <Text>Valor<Text>
-            <TextInput />
+            <TextInput 
+            onChangeText={setDivida}
+            value={divida}
+            />
+            <Text>Valor</Text>
+            <TextInput 
+            onChangeText={setDivida}
+            value={divida}
+            />
             <Text>Data de compra</Text>
-            <TextInput />
-            <Button title='Criar divida' onPress={() => {}}
-        <View>
+            <TextInput 
+            onChangeText={setDivida}
+            value={divida}
+            />
+            <Button title='Criar divida' onPress={() => {}} />
+        </View>
     );
 }
