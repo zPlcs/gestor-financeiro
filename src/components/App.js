@@ -3,6 +3,7 @@ import { View, Text, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import CriarDivida from './CriarDividaPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -44,7 +45,7 @@ function Perfil() {
 function RootStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Tela de Dívida" component={DividaPage} />
+      <Stack.Screen name="Tela de Dívida" component={CriarDivida} />
     </Stack.Navigator>
   );
 }
