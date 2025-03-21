@@ -11,7 +11,7 @@ export default function NavButtom(props){
     );
 }
 
-const Style = StyleSheet.create((
+const Style = StyleSheet.create({
     container:{
         flex: 1,
         justifyContent:'center',
@@ -22,4 +22,4 @@ const Style = StyleSheet.create((
         borderWidth: 1,
         borderColor: 'black'
     },
-))
+})
