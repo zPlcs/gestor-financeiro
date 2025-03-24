@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextInput, Text, View, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function CriarDividaPage() {
-  const [nome, setNome] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [valor, setValor] = useState('');
-  const [datadecompra, setDatadecompra] = useState('');
-  const [dividaList, setDividaList] = useState([]);
+import { DividaContext } from '../process/DividaContext';
+
+export default function CriarDividaScreen() {
+  const { nome, setNome, descricao, setDescricao, valor, setValor, datadecompra, setDatadecompra, dividaList, setDividaList } = useContext(DividaContext);
+  const navigate = useNavigation();
 
   const CriarDivida = () => {
+    
     const novaDivida = {
       nome,
       descricao,
@@ -22,6 +23,7 @@ export default function CriarDividaPage() {
     setDescricao('');
     setValor('');
     setDatadecompra('');
+    navigate.goBack();
   };
 
   return (

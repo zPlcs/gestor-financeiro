@@ -1,19 +1,20 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import CriarDivida from './CriarDividaPage';
+
+import { DividaProvider } from './src/process/DividaContext';
+
+import HomePage from './src/components/HomeScreen';
+import CriarDividaScreen from './src/components/CriarDividaScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function Home() {
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  );
+  return <HomePage />;
 }
 
 function DividaPage({ navigation }) {
@@ -28,7 +29,7 @@ function DividaPage({ navigation }) {
 function CriarDivida() {
   const navigation = useNavigation();
   return (
-    <View style={{flex: 1, justifyContent:'center'}}>
+    <View style={{ flex: 1, justifyContent: 'center' }}>
       <Button title="Teste" onPress={() => navigation.navigate('DividaPage')} />
     </View>
   );
@@ -44,9 +45,11 @@ function Perfil() {
 
 function RootStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Tela de Dívida" component={CriarDivida} />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator>
+        <Stack.Screen name="Tela de Dívida" component={CriarDividaScreen} />
+      </Stack.Navigator>
+    </>
   );
 }
 
@@ -69,8 +72,10 @@ function RootTab() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <RootTab />
-    </NavigationContainer>
+    <DividaProvider>
+      <NavigationContainer>
+        <RootTab />
+      </NavigationContainer>
+    </DividaProvider>
   );
 }
