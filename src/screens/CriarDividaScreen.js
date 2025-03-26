@@ -9,7 +9,7 @@ export default function CriarDividaScreen() {
   const navigate = useNavigation();
 
   const CriarDivida = () => {
-    
+
     const novaDivida = {
       nome,
       descricao,
@@ -30,26 +30,26 @@ export default function CriarDividaScreen() {
     <View>
       <Text>Insira os dados da sua dívida</Text>
       <Text>Nome</Text>
-      <TextInput 
+      <TextInput
         value={nome}
         onChangeText={setNome}
       />
 
       <Text>Descrição</Text>
-      <TextInput 
+      <TextInput
         value={descricao}
         onChangeText={setDescricao}
       />
 
       <Text>Valor</Text>
-      <TextInput 
+      <TextInput
         value={valor}
         onChangeText={setValor}
         keyboardType="numeric"
       />
 
       <Text>Data de Compra</Text>
-      <TextInput 
+      <TextInput
         value={datadecompra}
         onChangeText={setDatadecompra}
       />

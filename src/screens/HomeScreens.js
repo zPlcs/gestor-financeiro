@@ -14,7 +14,7 @@ export default function Home() {
           </Text>
         ))
       ) : (
-        <Text>Não há dívidas cadastradas.</Text> 
+        <Text>Não há dívidas cadastradas.</Text>
       )}
     </View>
   );

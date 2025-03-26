@@ -1,10 +1,13 @@
-import React from 'react'
-import { TouchableOpacity, Text, StyleSheet, Dimensions, View } from 'react-native'
+import React from 'react';
+import { TouchableOpacity, Text, StyleSheet, Dimensions, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function NavButton(){
-  return(
+export default function NavButton() {
+  const navigation = useNavigation();
+
+  return (
     <View style={Style.container}>
-      <TouchableOpacity style={Style.button}>
+      <TouchableOpacity style={Style.button} onPress={() => navigation.navigate('DividaPage')}>
         <Text>+</Text>
       </TouchableOpacity>
     </View>
@@ -12,16 +15,16 @@ export default function NavButton(){
 }
 
 const Style = StyleSheet.create({
-  button:{
+  button: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: 'black',
-    width:Dimensions.get('window').width / 6
+    width: Dimensions.get('window').width / 6
   },
 
-  container:{
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

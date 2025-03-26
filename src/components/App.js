@@ -17,15 +17,6 @@ function Home() {
   return <HomePage />;
 }
 
-function DividaPage({ navigation }) {
-  return (
-    <View>
-      <Text>Teste</Text>
-      <Button title="Voltar" onPress={() => navigation.goBack()} />
-    </View>
-  );
-}
-
 function CriarDivida() {
   const navigation = useNavigation();
   return (
