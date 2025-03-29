@@ -55,10 +55,6 @@ export default function CriarDividaScreen() {
       />
 
       <Button title="Criar dívida" onPress={CriarDivida} />
-
-      {dividaList.map((item, index) => (
-        <Text key={index}>{item.nome} - R$ {item.valor}</Text>
-      ))}
     </View>
   );
 }

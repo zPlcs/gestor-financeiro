@@ -10,6 +10,8 @@ import { DividaProvider } from '../process/DividaContext';
 import HomePage from '../screens/HomeScreens';
 import CriarDividaScreen from '../screens/CriarDividaScreen';
 
+import Style from '../style/style';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
