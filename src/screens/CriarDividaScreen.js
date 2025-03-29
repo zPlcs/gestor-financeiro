@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { DividaContext } from '../process/DividaContext';
 
+import { createTable, addTransacao, getTransacoes, updateTransacao, deleteTransacao } from '../database/database';
+
 export default function CriarDividaScreen() {
   const { nome, setNome, descricao, setDescricao, valor, setValor, datadecompra, setDatadecompra, dividaList, setDividaList } = useContext(DividaContext);
   const navigate = useNavigation();
