@@ -1,4 +1,5 @@
 import React, { useState, createContext, useEffect } from 'react'
+import { createTable, addDivida, getDividas, updateDivida, deleteDivida } from '../database/database';
 
 export const DividaContext = createContext();
 

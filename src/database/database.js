@@ -20,7 +20,7 @@ export const createTable = () => {
 };
 
 export const addDivida = (nome, descricao, valor, datadecompra, callback) => {
-    db.transaction(tx => {
+    db.dividas(tx => {
         tx.executeSql(
             `INSERT INTO dividas (nome, descricao, valor, datadecompra) VALUES (?, ?, ?, ?);`,
             [nome, descricao, parseFloat(valor), datadecompra],
@@ -31,7 +31,7 @@ export const addDivida = (nome, descricao, valor, datadecompra, callback) => {
 };
 
 export const getDividas = (callback) => {
-    db.transaction(tx => {
+    db.dividas(tx => {
         tx.executeSql(
             `SELECT * FROM dividas;`,
             [],
@@ -42,7 +42,7 @@ export const getDividas = (callback) => {
 };
 
 export const updateDivida = (id, nome, descricao, valor, datadecompra, callback) => {
-    db.transaction(tx => {
+    db.dividas(tx => {
         tx.executeSql(
             `UPDATE dividas SET nome=?, descricao=?, valor=?, datadecompra=? WHERE id=?;`,
             [nome, descricao, parseFloat(valor), datadecompra, id],
@@ -53,7 +53,7 @@ export const updateDivida = (id, nome, descricao, valor, datadecompra, callback)
 };
 
 export const deleteDivida = (id, callback) => {
-    db.transaction(tx => {
+    db.dividas(tx => {
         tx.executeSql(
             `DELETE FROM dividas WHERE id=?;`,
             [id],
