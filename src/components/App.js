@@ -5,10 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
-import { DividaProvider } from './src/process/DividaContext';
+import { DividaProvider } from '../process/DividaContext';
 
-import HomePage from './src/components/HomeScreen';
-import CriarDividaScreen from './src/components/CriarDividaScreen';
+import HomePage from '../screens/HomeScreens';
+import CriarDividaScreen from '../screens/CriarDividaScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
