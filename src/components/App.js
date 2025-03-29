@@ -1,3 +1,5 @@
+import * as SQLite from 'expo-sqlite';
+
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
