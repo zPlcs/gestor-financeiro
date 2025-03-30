@@ -1,64 +1,62 @@
 import * as SQLite from 'expo-sqlite';
 
-const db = SQLite.openDatabaseSync('GenFinances.db');
-
-export const createTable = () => {
-    db.transaction(tx => {
-        tx.executeSql(
-            `CREATE TABLE IF NOT EXISTS dividas (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          nome TEXT,
-          descricao TEXT,
-          valor REAL,
-          datadecompra TEXT
-        );`,
-            [],
-            () => console.log('Tabela de dívidas criada'),
-            (_, error) => console.log('Erro ao criar tabela', error)
-        );
-    });
+// Função para abrir o banco de dados
+const openDatabase = async () => {
+  return await SQLite.openDatabaseAsync('GenFinances.db');
 };
 
-export const addDivida = (nome, descricao, valor, datadecompra, callback) => {
-    db.dividas(tx => {
-        tx.executeSql(
-            `INSERT INTO dividas (nome, descricao, valor, datadecompra) VALUES (?, ?, ?, ?);`,
-            [nome, descricao, parseFloat(valor), datadecompra],
-            (_, result) => callback(result.insertId),
-            (_, error) => console.log('Erro ao inserir dívida', error)
-        );
-    });
+// Exporta a função initDB corretamente
+export const initDB = async () => {
+  try {
+    const db = await openDatabase();
+    await db.execAsync(`
+      CREATE TABLE IF NOT EXISTS dividas (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        descricao TEXT,
+        valor REAL NOT NULL,
+        datadecompra TEXT NOT NULL
+      );
+    `);
+    console.log('Banco de dados inicializado com sucesso');
+    return db; // Retorna a instância do banco
+  } catch (error) {
+    console.error('Erro ao inicializar banco:', error);
+    throw error;
+  }
 };
 
-export const getDividas = (callback) => {
-    db.dividas(tx => {
-        tx.executeSql(
-            `SELECT * FROM dividas;`,
-            [],
-            (_, { rows }) => callback(rows._array),
-            (_, error) => console.log('Erro ao buscar dívidas', error)
-        );
-    });
-};
+// Operações CRUD
+export const dbService = {
+  addDivida: async (divida) => {
+    const db = await openDatabase();
+    const result = await db.runAsync(
+      'INSERT INTO dividas (nome, descricao, valor, datadecompra) VALUES (?, ?, ?, ?)',
+      [divida.nome, divida.descricao, parseFloat(divida.valor), divida.datadecompra]
+    );
+    return result.lastInsertRowId;
+  },
 
-export const updateDivida = (id, nome, descricao, valor, datadecompra, callback) => {
-    db.dividas(tx => {
-        tx.executeSql(
-            `UPDATE dividas SET nome=?, descricao=?, valor=?, datadecompra=? WHERE id=?;`,
-            [nome, descricao, parseFloat(valor), datadecompra, id],
-            (_, result) => callback(result.rowsAffected),
-            (_, error) => console.log('Erro ao atualizar dívida', error)
-        );
-    });
-};
+  getDividas: async () => {
+    const db = await openDatabase();
+    return await db.getAllAsync('SELECT * FROM dividas ORDER BY datadecompra DESC');
+  },
 
-export const deleteDivida = (id, callback) => {
-    db.dividas(tx => {
-        tx.executeSql(
-            `DELETE FROM dividas WHERE id=?;`,
-            [id],
-            (_, result) => callback(result.rowsAffected),
-            (_, error) => console.log('Erro ao deletar dívida', error)
-        );
-    });
+  updateDivida: async (id, divida) => {
+    const db = await openDatabase();
+    const result = await db.runAsync(
+      'UPDATE dividas SET nome=?, descricao=?, valor=?, datadecompra=? WHERE id=?',
+      [divida.nome, divida.descricao, parseFloat(divida.valor), divida.datadecompra, id]
+    );
+    return result.changes;
+  },
+
+  deleteDivida: async (id) => {
+    const db = await openDatabase();
+    const result = await db.runAsync(
+      'DELETE FROM dividas WHERE id=?',
+      [id]
+    );
+    return result.changes;
+  }
 };
