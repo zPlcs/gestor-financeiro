@@ -1,74 +1,36 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native';
+import React from 'react'
+import Home from '../screens/Home'
+import CriarDivida from '../screens/CriarDivida'
+import { MainProvider } from '../context/MainContext'
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-
-import { DividaProvider } from '../process/DividaContext';
-
-import HomePage from '../screens/HomeScreens';
-import CriarDividaScreen from '../screens/CriarDividaScreen';
-
-import Style from '../style/style';
-
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
-
-function Home() {
-  return <HomePage />;
-}
-
-function CriarDivida() {
-  const navigation = useNavigation();
-  return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-      <Button title="Teste" onPress={() => navigation.navigate('DividaPage')} />
-    </View>
-  );
-}
-
-function Perfil() {
-  return (
-    <View>
-      <Text>Página de perfil</Text>
-    </View>
-  );
-}
-
-function RootStack() {
-  return (
-    <>
-      <Stack.Navigator>
-        <Stack.Screen name="Tela de Dívida" component={CriarDividaScreen} />
-      </Stack.Navigator>
-    </>
-  );
-}
-
-function RootTab() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen
-        name="DividaPage"
-        component={RootStack}
-        options={{
-          tabBarButton: () => <CriarDivida />,
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen name="Perfil" component={Perfil} />
-    </Tab.Navigator>
-  );
-}
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
+  const Tab = createBottomTabNavigator();
+
+  function RootTab() {
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name='Home' component={Home} />
+        <Tab.Screen name='CriarDivida' component={RootStack} />
+      </Tab.Navigator>
+    );
+  }
+
+  function RootStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name='Home' component={CriarDivida} options={{ headerShown: false }} />
+      </Stack.Navigator>);
+  }
+
   return (
-    <DividaProvider>
+    <MainProvider>
       <NavigationContainer>
         <RootTab />
       </NavigationContainer>
-    </DividaProvider>
-  );
-}
+    </MainProvider>
+
