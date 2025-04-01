@@ -9,15 +9,15 @@ export default function CriarDivida() {
         name, setName,
         value, setValue,
         date, setDate,
-        setDividaList,
+        setDividas,
         criarDivida,
-        ClearForm
+        ClearForm,
     } = useContext(MainContext);
 
     function CriarDivida(){
         try{
             const novaDivida = { name, value, date, id: Math.floor(new Date().valueOf() * Math.random())  };
-            setDividaList(prevDivida => [...prevDivida, novaDivida]);
+            setDividas(prevDivida => [...prevDivida, novaDivida]);
             criarDivida(novaDivida);
             ClearForm();
             navigation.goBack();

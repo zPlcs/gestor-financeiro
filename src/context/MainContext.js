@@ -29,8 +29,6 @@ export function MainProvider({ children }) {
     const [value, setValue] = useState(0);
     const [date, setDate] = useState('');
     const [dividas, setDividas] = useState([]);
-    const [dividaList, setDividaList] = useState([])
-    const [dividaListTeste, setDividaListTeste] = useState([])
 
     function ClearForm(){
         setName('');
@@ -43,11 +41,9 @@ export function MainProvider({ children }) {
             name, setName,
             value, setValue,
             date, setDate,
-            dividaList, setDividaList,
             criarDivida,
             ClearForm,
-            dividaListTeste, setDividaListTeste
-            
+            dividas, setDividas
         }}>
             {children}
         </MainContext.Provider>
