@@ -4,7 +4,7 @@ import { MainContext } from '../context/MainContext'
 
 export default function Home() {
     const {
-        dividaList, dividaListTeste, dividas
+        dividas
     } = useContext(MainContext);
     
     const key = (p) => {

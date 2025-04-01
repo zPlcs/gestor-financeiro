@@ -21,7 +21,7 @@ export function MainProvider({ children }) {
             const updatedDividas = await getDivida();
             setDividas(updatedDividas);
         } catch(error) {
-            console.error('Falaha ao criar divida:', error);
+            console.error('Falha ao criar divida (Func. criarDivida() => MainContext.js):', error);
         }
     };
 

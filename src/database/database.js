@@ -18,7 +18,7 @@ export const initDB = async () => {
         `);
         console.log('Tabela criada');
     } catch(error) {
-        console.error('Erro ao criar tabela', error)
+        console.error('Erro ao criar tabela (Func. initDB() => database.js)', error)
     }
 };
 
@@ -31,7 +31,7 @@ export const addDivida = async (divida) => {
     );
     return result.lastInsertRowId;
    } catch (error) {
-    console.error('Erro ao criar a divida', error)
+    console.error('Erro ao criar a divida (Func. addDivida() => database.js):', error)
    }
 };
 
@@ -45,6 +45,6 @@ export const getDivida = async () => {
           }
         return allRows;
     } catch(error){
-        console.error('Erro ao ler dividas', error)
+        console.error('Erro ao ler dividas (Func. getDivida() => database.js)', error)
     }
 };
