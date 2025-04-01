@@ -9,20 +9,21 @@ export default function CriarDivida() {
         name, setName,
         value, setValue,
         date, setDate,
-        setDividaList,
+        setDividas,
         criarDivida,
-        ClearForm
+        ClearForm,
     } = useContext(MainContext);
 
-    function CriarDivida(){
+    const CriarDivida = async () => {
         try{
-            const novaDivida = { name, value, date, id: Math.floor(new Date().valueOf() * Math.random())  };
-            setDividaList(prevDivida => [...prevDivida, novaDivida]);
+            const novaDivida = { name, value, date };
+            const id = await criarDivida(novaDivida);
+            setDividas(prevDivida => [...prevDivida, {novaDivida, id}]);
             criarDivida(novaDivida);
             ClearForm();
             navigation.goBack();
         } catch (error) {
-            console.error("Falha ao criar dívida:", error);
+            console.error("Falha ao criar dívida (Func. CriarDivida() => CriarDivida.js):", error);
         }
     }
     return (

@@ -4,7 +4,7 @@ import { MainContext } from '../context/MainContext'
 
 export default function Home() {
     const {
-        dividaList, dividaListTeste
+        dividas
     } = useContext(MainContext);
     
     const key = (p) => {
@@ -23,7 +23,7 @@ export default function Home() {
         <View>
             <Text>HomePage</Text>
             <FlatList
-            data={dividaListTeste}
+            data={dividas}
             keyExtractor={key}
             renderItem={rend}
             />
