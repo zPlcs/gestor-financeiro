@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { ButtonEditar, ButtonApagar } from './Button'
+import Style from '../style/style'
 
 export default function DividaItem({ item }) {
     return (
@@ -19,7 +20,7 @@ export default function DividaItem({ item }) {
         </View>
     );
 }
-
+{/* 
 const Style = StyleSheet.create({
     navButton: {
         flex: 1,
@@ -45,6 +46,7 @@ const Style = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+*/}
 
 {/*
     Método:

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import { MainContext } from '../context/MainContext'
+import DividaItem from '../components/DividaItem'
 
 export default function Home() {
     const {
@@ -25,7 +26,7 @@ export default function Home() {
             <FlatList
             data={dividas}
             keyExtractor={key}
-            renderItem={rend}
+            renderItem={DividaItem}
             />
         </View>
     );

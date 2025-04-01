@@ -1,31 +1,32 @@
 import React from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Style from '../style/style'
 
 export function ButtonEditar(props) {
-  return (
-    <>
-      <TouchableOpacity
-        style={Style.button}
-        onPress={props.onPress}>
-        <Text style={Style.infoText}>Editar</Text>
-      </TouchableOpacity>
-    </>
-  );
+    return (
+        <>
+            <TouchableOpacity
+                style={Style.button}
+                onPress={props.onPress}>
+                <Text style={Style.infoText}>Editar</Text>
+            </TouchableOpacity>
+        </>
+    );
 }
 
 export function ButtonApagar(props) {
-  return (
-    <>
-      <TouchableOpacity
-        style={Style.button}
-        onPress={props.onPress}>
-        <Text style={Style.infoText}>Apagar</Text>
-      </TouchableOpacity>
-    </>
-  );
+    return (
+        <>
+            <TouchableOpacity
+                style={Style.button}
+                onPress={props.onPress}>
+                <Text style={Style.infoText}>Apagar</Text>
+            </TouchableOpacity>
+        </>
+    );
 }
-
-const Style = StyleSheet.create({
+{/* 
+    const Style = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -42,3 +43,5 @@ const Style = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+*/}
+
