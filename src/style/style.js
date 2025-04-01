@@ -5,6 +5,15 @@ const Style = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+
+    mainHome:{
+        padding: 20,
+    },
+
+    mainTextHome:{
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 })
 

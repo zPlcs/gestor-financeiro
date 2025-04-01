@@ -33,5 +33,4 @@ export default function App() {
         <RootTab />
       </NavigationContainer>
     </MainProvider>
-  );
-}
+
