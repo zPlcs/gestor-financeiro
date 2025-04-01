@@ -12,6 +12,7 @@ export function DividaProvider({ children }) {
   const [datadecompra, setDatadecompra] = useState('');
   const [dividas, setDividas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null);
 
   // Inicializa o banco e carrega as dívidas
   useEffect(() => {
@@ -29,7 +30,43 @@ export function DividaProvider({ children }) {
     loadData();
   }, []);
 
-  // Adiciona nova dívida
+  // Edita dívida
+  const updateDivida = async (id) => {
+    if (!nome || !valor || !datadecompra) {
+      alert('Nome, valor e data são obrigatórios!');
+      return;
+    } try {
+      // Garantir que o valor é numérico
+      const valorNumerico = parseFloat(valor);
+      if (isNaN(valorNumerico)) {
+        alert('Valor deve ser um número válido');
+        return;
+      }
+      const dividaAtualizada = {
+        nome,
+        descricao: descricao || null,
+        valor: valorNumerico,
+        datadecompra
+      };
+
+      const changes = await dbService.updateDivida(id, dividaAtualizada);
+
+      if (changes > 0) {
+        setDividas(dividas.map(divida =>
+          divida.id === id ? { ...dividaAtualizada, id } : divida
+        ));
+        clearForm();
+        setEditingId(null);
+      } else {
+        alert('Nenhuma dívida foi atualizada');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar dívida:', error);
+      alert(`Erro ao atualizar dívida: ${error.message}`);
+    }
+  };
+
+
   // Remove dívida
   const removeDivida = async (id) => {
     try {
@@ -54,11 +91,13 @@ export function DividaProvider({ children }) {
       descricao, setDescricao,
       valor, setValor,
       datadecompra, setDatadecompra,
+      editingId, setEditingId,
       dividas,
       loading,
       setDividas,
       removeDivida,
-      clearForm
+      clearForm,
+      updateDivida
     }}>
       {children}
     </DividaContext.Provider>

@@ -44,11 +44,21 @@ export const dbService = {
 
   updateDivida: async (id, divida) => {
     const db = await openDatabase();
-    const result = await db.runAsync(
-      'UPDATE dividas SET nome=?, descricao=?, valor=?, datadecompra=? WHERE id=?',
-      [divida.nome, divida.descricao, parseFloat(divida.valor), divida.datadecompra, id]
-    );
-    return result.changes;
+    try {
+      const result = await db.runAsync(
+        'UPDATE dividas SET nome=?, descricao=?, valor=?, datadecompra=? WHERE id=?',
+        [
+          divida.nome,
+          divida.descricao,
+          divida.valor, // Já convertido para número
+          divida.datadecompra,
+          id
+        ]
+      );
+      return result.changes;
+    } finally {
+      await db.closeAsync(); // Importante fechar a conexão
+    }
   },
 
   deleteDivida: async (id) => {
