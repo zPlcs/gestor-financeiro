@@ -12,14 +12,6 @@ export default function Home() {
         return p.id;
     }
 
-    const rend = ({ item }) => {
-        return(
-            <Text>
-                {item.id} - {item.name} - {item.date}
-            </Text>
-        );
-    }
-
     return (
         <View>
             <Text>HomePage</Text>

@@ -3,8 +3,10 @@ import { View, Text } from 'react-native';
 import { ButtonEditar, ButtonApagar } from './Button'
 import Style from '../style/style'
 import { MainContext } from '../context/MainContext'
+import { useNavigation } from '@react-navigation/native';
 
 export default function DividaItem({ item }) {
+    const navigation = useNavigation();
     const { deletarDivida } = useContext(MainContext);
 
     const handleDelete = async () => {
@@ -13,6 +15,15 @@ export default function DividaItem({ item }) {
         } catch(error) {
             console.error('erro ao deletar')
         }
+    }
+
+    const handleEditar = () => {
+        navigation.navigate('EditDivida',{
+        dividaID: item.id,
+        dividaName: item.name,
+        dividaValue: item.value,
+        dividaDate: item.date
+       });
     }
     return (
         <View style={Style.container}>
@@ -24,7 +35,7 @@ export default function DividaItem({ item }) {
                 <Text style={Style.infoText}>Data de ultima parcela:</Text>
             </View>
             <View style={Style.navButton}>
-                <ButtonEditar onPress={() => console.log('Editar pressionado', item.id)} />
+                <ButtonEditar onPress={handleEditar}/>
                 <ButtonApagar onPress={handleDelete} />
             </View>
         </View>

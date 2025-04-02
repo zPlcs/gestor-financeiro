@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { initDB, addDivida, getDivida, deleteDivida } from '../database/database'
+import { initDB, addDivida, getDivida, deleteDivida, updateDivida } from '../database/database'
 
 
 export const MainContext = createContext();
@@ -27,11 +27,21 @@ export function MainProvider({ children }) {
 
     const deletarDivida = async (id) =>{
         try{
-            await await deleteDivida(id); // Chama a função do banco diretamente
+            await deleteDivida(id); // Chama a função do banco diretamente
             const updatedDividas = await getDivida();
             setDividas(updatedDividas);
         } catch(error){
             console.error('Erro ao tentar excluir', error)
+        }
+    }
+
+    const editarDivida = async (id, novosDados) => {
+        try{
+            await updateDivida(id, novosDados);
+            const updatedDividas = await getDivida();
+            setDividas(updatedDividas);
+        } catch(error){
+            console.error('Erro ao editar')
         }
     }
 
@@ -56,7 +66,8 @@ export function MainProvider({ children }) {
             criarDivida,
             ClearForm,
             dividas, setDividas,
-            deletarDivida
+            deletarDivida,
+            editarDivida
         }}>
             {children}
         </MainContext.Provider>
