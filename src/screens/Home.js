@@ -7,18 +7,14 @@ export default function Home() {
     const {
         dividas
     } = useContext(MainContext);
-    
-    const key = (p) => {
-        return p.id;
-    }
 
     return (
         <View>
             <Text>HomePage</Text>
             <FlatList
-            data={dividas}
-            keyExtractor={key}
-            renderItem={({item}) => <DividaItem item={item} />}
+                data={dividas}
+                keyExtractor={(p) => p.id}
+                renderItem={({ item }) => <DividaItem item={item} />}
             />
         </View>
     );

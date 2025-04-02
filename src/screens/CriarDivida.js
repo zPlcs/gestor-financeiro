@@ -14,7 +14,7 @@ export default function CriarDivida() {
     } = useContext(MainContext);
 
     const CriarDivida = async () => {
-        try{
+        try {
             const novaDivida = { name, value, date };
             await criarDivida(novaDivida);
             ClearForm();
