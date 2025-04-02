@@ -10,20 +10,20 @@ export default function DividaItem({ item }) {
     const { deletarDivida } = useContext(MainContext);
 
     const handleDelete = async () => {
-        try{
+        try {
             await deletarDivida(item.id);
-        } catch(error) {
+        } catch (error) {
             console.error('erro ao deletar')
         }
     }
 
     const handleEditar = () => {
-        navigation.navigate('EditDivida',{
-        dividaID: item.id,
-        dividaName: item.name,
-        dividaValue: item.value,
-        dividaDate: item.date
-       });
+        navigation.navigate('EditDivida', {
+            dividaID: item.id,
+            dividaName: item.name,
+            dividaValue: item.value,
+            dividaDate: item.date
+        });
     }
     return (
         <View style={Style.container}>
@@ -35,7 +35,7 @@ export default function DividaItem({ item }) {
                 <Text style={Style.infoText}>Data de ultima parcela:</Text>
             </View>
             <View style={Style.navButton}>
-                <ButtonEditar onPress={handleEditar}/>
+                <ButtonEditar onPress={handleEditar} />
                 <ButtonApagar onPress={handleDelete} />
             </View>
         </View>

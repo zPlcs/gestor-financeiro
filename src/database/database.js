@@ -23,17 +23,16 @@ export const initDB = async () => {
 };
 
 export const addDivida = async (divida) => {
-
-   try {
-    const db = await getDBConnection();
-    const result = await db.runAsync(
-        `INSERT INTO dividas (name, value, date) VALUES (?, ?, ?)`,
-        [divida.name, divida.value, divida.date]
-    );
-    return result.lastInsertRowId;
-   } catch (error) {
-    console.error('Erro ao criar a divida (Func. addDivida() => database.js):', error)
-   }
+    try {
+        const db = await getDBConnection();
+        const result = await db.runAsync(
+            `INSERT INTO dividas (name, value, date) VALUES (?, ?, ?)`,
+            [divida.name, divida.value, divida.date]
+        );
+        return result.lastInsertRowId;
+    } catch (error) {
+        console.error('Erro ao criar a divida (Func. addDivida() => database.js):', error)
+    }
 };
 
 export const getDivida = async () => {
