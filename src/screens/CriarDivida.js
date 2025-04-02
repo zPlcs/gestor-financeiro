@@ -17,9 +17,7 @@ export default function CriarDivida() {
     const CriarDivida = async () => {
         try{
             const novaDivida = { name, value, date };
-            const id = await criarDivida(novaDivida);
-            setDividas(prevDivida => [...prevDivida, {novaDivida, id}]);
-            criarDivida(novaDivida);
+            await criarDivida(novaDivida);
             ClearForm();
             navigation.goBack();
         } catch (error) {

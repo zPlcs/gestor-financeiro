@@ -26,8 +26,8 @@ export const addDivida = async (divida) => {
    try {
     const db = await getDBConnection();
     const result = await db.runAsync(
-        `INSERT INTO dividas (name, value, date, descricao) VALUES (?, ?, ?, ?)`,
-        [divida.name, divida.value, divida.date, divida.descricao]
+        `INSERT INTO dividas (name, value, date) VALUES (?, ?, ?)`,
+        [divida.name, divida.value, divida.date]
     );
     return result.lastInsertRowId;
    } catch (error) {
