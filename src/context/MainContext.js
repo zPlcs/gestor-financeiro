@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { initDB, addDivida, getDivida } from '../database/database'
+import { initDB, addDivida, getDivida, deleteDivida } from '../database/database'
 
 
 export const MainContext = createContext();
@@ -25,6 +25,18 @@ export function MainProvider({ children }) {
         }
     };
 
+    const deletarDivida = async (id) =>{
+        try{
+            await await deleteDivida(id); // Chama a função do banco diretamente
+            const updatedDividas = await getDivida();
+            setDividas(updatedDividas);
+        } catch(error){
+            console.error('Erro ao tentar excluir', error)
+        }
+    }
+
+
+
     const [name, setName] = useState('');
     const [value, setValue] = useState(0);
     const [date, setDate] = useState('');
@@ -43,7 +55,8 @@ export function MainProvider({ children }) {
             date, setDate,
             criarDivida,
             ClearForm,
-            dividas, setDividas
+            dividas, setDividas,
+            deletarDivida
         }}>
             {children}
         </MainContext.Provider>

@@ -9,7 +9,6 @@ export default function CriarDivida() {
         name, setName,
         value, setValue,
         date, setDate,
-        setDividas,
         criarDivida,
         ClearForm,
     } = useContext(MainContext);
@@ -17,8 +16,6 @@ export default function CriarDivida() {
     const CriarDivida = async () => {
         try{
             const novaDivida = { name, value, date };
-            const id = await criarDivida(novaDivida);
-            setDividas(prevDivida => [...prevDivida, {novaDivida, id}]);
             criarDivida(novaDivida);
             ClearForm();
             navigation.goBack();

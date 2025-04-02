@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import { ButtonEditar, ButtonApagar } from './Button'
 import Style from '../style/style'
+import { MainContext } from '../context/MainContext'
 
 export default function DividaItem({ item }) {
+    const { deletarDivida } = useContext(MainContext);
+
+    const handleDelete = async () => {
+        try{
+            await deletarDivida(item.id);
+        } catch(error) {
+            console.error('erro ao deletar')
+        }
+    }
     return (
         <View style={Style.container}>
             <View style={Style.list}>
@@ -15,56 +25,8 @@ export default function DividaItem({ item }) {
             </View>
             <View style={Style.navButton}>
                 <ButtonEditar onPress={() => console.log('Editar pressionado', item.id)} />
-                <ButtonApagar onPress={() => console.log('Apagar pressionado', item.id)} />
+                <ButtonApagar onPress={handleDelete} />
             </View>
         </View>
     );
 }
-{/* 
-const Style = StyleSheet.create({
-    navButton: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    container: {
-        backgroundColor: '#f8f8f8',
-        margin: 20,
-        padding: 20,
-        borderColor: '#afafaf',
-        borderWidth: 1,
-        borderRadius: 10,
-    },
-
-    mainText: {
-        fontSize: 25,
-        fontWeight: 'bold',
-    },
-
-    infoText: {
-        fontSize: 15,
-        fontWeight: 'bold',
-    },
-});
-*/}
-
-{/*
-    Método:
-    
-      const key = (p) => {
-    return p.id;
-  }
-
-
-  return(
-    <View>
-      <Text>Divida List</Text>
-      <FlatList
-        data={data}
-        keyExtractor={key}
-        renderItem={DividaItem}
-      />
-    </View>
-  );
-}
-    */}

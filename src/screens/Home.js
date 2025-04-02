@@ -26,7 +26,7 @@ export default function Home() {
             <FlatList
             data={dividas}
             keyExtractor={key}
-            renderItem={DividaItem}
+            renderItem={({item}) => <DividaItem item={item} />}
             />
         </View>
     );

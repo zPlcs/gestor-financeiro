@@ -48,3 +48,15 @@ export const getDivida = async () => {
         console.error('Erro ao ler dividas (Func. getDivida() => database.js)', error)
     }
 };
+
+export const deleteDivida = async (id) => {
+    try{
+        const db = await getDBConnection();
+        await db.runAsync(`DELETE FROM dividas WHERE id = $id`, { $id: id });
+        return true;
+    } catch(error){
+        console.error("Erro ao tentar apagar", error)
+        return false;
+    }
+
+};
