@@ -44,3 +44,5 @@ export default function CriarDivida() {
         </View>
     );
 }
+
+{/* Criar outro banco, com as categorias */}
