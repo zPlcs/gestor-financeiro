@@ -1,20 +1,40 @@
 import { StyleSheet } from 'react-native'
 
 const Style = StyleSheet.create({
-    main:{
-        flex: 1,
+    button: {
         justifyContent: 'center',
         alignItems: 'center',
+        height: 50,
+        borderColor: '#afafaf',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginTop: 20,
+        width: '45%',
     },
 
-    mainHome:{
+    infoText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+    },
+
+    navButton: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    container: {
+        backgroundColor: '#f8f8f8',
+        margin: 20,
         padding: 20,
+        borderColor: '#afafaf',
+        borderWidth: 1,
+        borderRadius: 10,
     },
 
-    mainTextHome:{
-        fontSize: 20,
-        fontWeight: 'bold'
-    }
+    mainText: {
+        fontSize: 25,
+        fontWeight: 'bold',
+    },
 })
 
 export default Style;
