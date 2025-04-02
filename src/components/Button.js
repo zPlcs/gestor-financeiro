@@ -25,23 +25,4 @@ export function ButtonApagar(props) {
         </>
     );
 }
-{/* 
-    const Style = StyleSheet.create({
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    borderColor: '#afafaf',
-    borderWidth: 1,
-    borderRadius: 10,
-    marginTop: 20,
-    width: '45%',
-  },
-
-  infoText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-});
-*/}
 
