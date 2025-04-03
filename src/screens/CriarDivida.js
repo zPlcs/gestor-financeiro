@@ -89,5 +89,3 @@ export default function CriarDivida() {
         </SafeAreaView>
     );
 }
-
-{/* Criar outro banco, com as categorias */ }
