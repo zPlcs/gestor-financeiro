@@ -72,6 +72,7 @@ export default function CriarDivida() {
                 onValueChange={(itemValue) => setPaymentType(itemValue)}>
                 <Picker.Item label="Compra Única" value="Compra Única" />
                 <Picker.Item label="Parcelado" value="Parcelado" />
+                <Picker.Item label="Recorrente" value="Recorrente" />
             </Picker>
 
             {paymentType === 'Parcelado' && (

@@ -14,7 +14,7 @@ export const initDB = async () => {
             value REAL NOT NULL,
             date TEXT NOT NULL,
             category_id INTEGER,
-            paymentType TEXT CHECK(paymentType IN ('Parcelado', 'Compra Única')),
+            paymentType TEXT CHECK(paymentType IN ('Parcelado', 'Compra Única', 'Recorrente')),
             installments INTEGER DEFAULT 1,
             FOREIGN KEY (category_id) REFERENCES categorys(id)
           );
