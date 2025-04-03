@@ -90,4 +90,102 @@ export default function CriarDivida() {
     );
 }
 
-{/* Criar outro banco, com as categorias */ }
+{/* Página de criar divida com o selecionador de datas criado. (Necessário integrar no sistema inteiro, tendo a sua base também alterada.)
+
+
+import React, { useState } from 'react';
+import {
+  TextInput,
+  View,
+  Text,
+  Button,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+export default function App() {
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
+  const [value, setValue] = useState(0);
+  const [list, setList] = useState([]);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showCalendar = () => {
+    setShow(true);
+  };
+
+  const CriarLista = () => {
+    const newList = {
+      id: new Date().getTime().toString(),
+      name: name,
+      value: value,
+      date: date.toLocaleDateString(),
+    };
+    setList([...list, newList]);
+    setValue('');
+    setName('');
+    setDate(new Date());
+  };
+
+  const key = (p) => {
+    return p.id;
+  };
+
+  const rend = ({ item }) => {
+    return (
+      <View>
+        <Text>{item.id}</Text>
+        <Text>{item.name}</Text>
+        <Text>{item.value}</Text>
+        <Text>{item.date}</Text>
+      </View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={{ padding: 20 }}>
+      <View>
+        <Text>Nome:</Text>
+        <TextInput style={Style.input} value={name} onChangeText={setName} />
+      </View>
+      <View>
+        <Text>Valor:</Text>
+        <TextInput style={Style.input} value={value} onChangeText={setValue} />
+      </View>
+      <View>
+        <Text>Data:</Text>
+        <TouchableOpacity onPress={showCalendar} style={Style.input}>
+          <Text>{date.toLocaleDateString()}</Text>
+        </TouchableOpacity>
+        {show && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChange}
+            is24Hour={true}
+          />
+        )}
+      </View>
+      <Button title="Criar Lista" onPress={CriarLista} />
+      <FlatList data={list} keyExtractor={key} renderItem={rend} />
+    </SafeAreaView>
+  );
+}
+
+const Style = StyleSheet.create({
+  input: {
+    padding: 20,
+  },
+});
+
+    */}
