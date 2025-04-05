@@ -64,7 +64,7 @@ export function MainProvider({ children }) {
 
     const [name, setName] = useState('');
     const [value, setValue] = useState(0);
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date());
     const [categoryName, setCategoryName]= useState('');
     const [categorys, setCategorys] = useState([]);
     const [dividas, setDividas] = useState([]);
@@ -72,7 +72,7 @@ export function MainProvider({ children }) {
     function ClearFormDivida(){
         setName('');
         setValue('');
-        setDate('');
+        setDate(new Date());
     }
 
     function ClearFormCategoria(){
