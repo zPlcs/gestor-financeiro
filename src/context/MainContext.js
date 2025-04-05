@@ -71,7 +71,7 @@ export function MainProvider({ children }) {
 
     function ClearFormDivida(){
         setName('');
-        setValue('');
+        setValue(0);
         setDate(new Date());
     }
 

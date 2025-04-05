@@ -18,12 +18,7 @@ export default function CriarDivida() {
     ClearFormDivida,
   } = useContext(MainContext);
 
-  const formatDate = (date) => {
-    const day = String(date.getDate()).padStart(2, '0'); // Garante 2 dígitos (ex.: 05)
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Mês começa em 0 (janeiro=0)
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`; // Ex.: "05/04/2025"
-  };
+
 
   const [show, setShow] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -50,6 +45,7 @@ export default function CriarDivida() {
         paymentType,
         installments: paymentType === 'Parcelado' ? parseInt(installments) : 1
       };
+
       await criarDivida(novaDivida);
       ClearFormDivida();
       navigation.goBack();
@@ -57,6 +53,18 @@ export default function CriarDivida() {
       console.error("Falha ao criar dívida (Func. CriarDivida() => CriarDivida.js):", error);
     }
   }
+
+  const formatDate = (date) => {
+    // Se não for um objeto Date válido, retorne um valor padrão (ou trate o erro)
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      return "Data inválida"; // Ou retorne uma data padrão: return "01/01/1970";
+    }
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   return (
     <SafeAreaView>
       <Text>Nome:</Text>
