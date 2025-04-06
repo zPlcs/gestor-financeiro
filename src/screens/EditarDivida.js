@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import { View, TextInput, Text, Button } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, TextInput, Text, Button, TouchableOpacity } from 'react-native'
 import { MainContext } from '../context/MainContext'
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EditarDivida() {
     const navigation = useNavigation();
@@ -23,9 +24,13 @@ export default function EditarDivida() {
     } = useContext(MainContext)
 
     useEffect(() => {
+        const [day, month, year] = dividaDate.split('/');
+        const originalDate = new Date(year, month - 1, day);
+
+        // Inicializar os estados com os valores da dívida
         setName(dividaName);
         setValue(dividaValue);
-        setDate(dividaDate);
+        setDate(originalDate);
         return () => {
             ClearFormDivida();
         };
@@ -33,22 +38,53 @@ export default function EditarDivida() {
 
     const handleEditar = async () => {
         try {
-            const updatedData = {
-                name: name || dividaName,
-                value: value || dividaValue,
-                date: date || dividaDate
+            const updatedData = { name, value, date: formatDate(date) }
+            if (name !== dividaName) {
+                updatedData.name = name;
             }
-            const hasChanged = name !== dividaName || value !== dividaValue || date !== dividaDate;
 
-            if (hasChanged) {
-                await editarDivida(dividaID, updatedData);
+            if (value !== dividaValue) {
+                updatedData.value = value;
             }
+
+            const currentFormattedDate = formatDate(date);
+            if (currentFormattedDate !== dividaDate) {
+                updatedData.date = currentFormattedDate;
+            }
+
+            if(name !== dividaName || value !== dividaValue || date !== dividaDate){
+                await editarDivida(dividaID, updatedData); 
+            }
+
             ClearFormDivida();
             navigation.goBack();
         } catch (error) {
             console.error('Erro ao atualizar', error)
         }
     };
+    const [show, setShow] = useState(false);
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;;
+        setShow(false);
+        setDate(currentDate);
+    };
+
+    const showCalendar = () => {
+        setShow(true);
+    };
+
+    const formatDate = (dateObj) => {
+        if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) {
+            return dividaDate; // Retorna a data original se a nova for inválida
+        }
+
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
     return (
         <SafeAreaView>
             <Text>{dividaID}</Text>
@@ -66,10 +102,18 @@ export default function EditarDivida() {
                 onChangeText={setValue}
             />
             <Text>Data:</Text>
-            <TextInput
-                value={date}
-                onChangeText={setDate}
-            />
+            <TouchableOpacity onPress={showCalendar}>
+                <Text>{formatDate(date)}</Text>
+            </TouchableOpacity>
+            {show && (
+                <DateTimePicker
+                    value={date}
+                    mode="date"
+                    display="default"
+                    onChange={onChange}
+                    is24Hour={true}
+                />
+            )}
             <Button title='Salvar Dívida' onPress={handleEditar} />
         </SafeAreaView>
     );
