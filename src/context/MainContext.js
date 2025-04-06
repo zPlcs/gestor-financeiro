@@ -1,5 +1,16 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { initDB, addDivida, getDivida, deleteDivida, updateDivida, getCategorys, addCategory } from '../database/database'
+import {
+    initDB,
+    addDivida,
+    getDivida,
+    deleteDivida,
+    updateDivida,
+    getCategorys,
+    addCategory,
+    deleteDatabase,
+    createList,
+    getLists
+} from '../database/database'
 
 
 export const MainContext = createContext();
@@ -8,50 +19,77 @@ export function MainProvider({ children }) {
     useEffect(() => {
         const loadData = async () => {
             await initDB();
+            const listsFromDB = await getLists();
             const dividasFromDB = await getDivida();
             const categorysFromDB = await getCategorys();
             setCategorys(categorysFromDB);
             setDividas(dividasFromDB);
+            setLists(listsFromDB);
         };
         loadData();
     }, []);
 
-    const criarDivida = async (novaDivida) => {
+// CRUD (CREATE)
+    const criarList = async (newList) => {
         try{
+            await createList(newList);
+            const updatedLists = await getLists();
+            setLists(updatedLists);
+        } catch(error){
+            console.error('Falha ao criar lista (Func. criarList() => MainContext.js)', error)
+        }
+    }
+
+// CRUD (READ)
+
+// CRUD (UPDATE)
+
+// (CRUD) (DELETE)
+
+    const criarDivida = async (novaDivida) => {
+        try {
             await addDivida(novaDivida);
             const updatedDividas = await getDivida();
             setDividas(updatedDividas);
-        } catch(error) {
+        } catch (error) {
             console.error('Falha ao criar divida (Func. criarDivida() => MainContext.js):', error);
         }
     };
 
-    const deletarDivida = async (id) =>{
-        try{
+    const deletarBanco = async () => {
+        try {
+            await deleteDatabase()
+        } catch (error) {
+            console.error('banco nãod deletado', error)
+        }
+    }
+
+    const deletarDivida = async (id) => {
+        try {
             await deleteDivida(id);
             const updatedDividas = await getDivida();
             setDividas(updatedDividas);
-        } catch(error){
+        } catch (error) {
             console.error('Erro ao tentar excluir', error)
         }
     }
 
     const editarDivida = async (id, novosDados) => {
-        try{
+        try {
             await updateDivida(id, novosDados);
             const updatedDividas = await getDivida();
             setDividas(updatedDividas);
-        } catch(error){
+        } catch (error) {
             console.error('Erro ao editar')
         }
     }
 
     const criarCategory = async (newCategory) => {
-        try{
+        try {
             await addCategory(newCategory);
             const updatedCategorys = await getCategorys();
             setCategorys(updatedCategorys);
-        } catch(error) {
+        } catch (error) {
             console.error('Falha ao criar categoria (Func. criarCategory() => MainContext.js):', error);
         }
     };
@@ -65,17 +103,20 @@ export function MainProvider({ children }) {
     const [name, setName] = useState('');
     const [value, setValue] = useState(0);
     const [date, setDate] = useState(new Date());
-    const [categoryName, setCategoryName]= useState('');
+    const [categoryName, setCategoryName] = useState('');
     const [categorys, setCategorys] = useState([]);
     const [dividas, setDividas] = useState([]);
 
-    function ClearFormDivida(){
+    const [nameList, setNameList] = useState('');
+    const [lists, setLists] = useState([]);
+
+    function ClearFormDivida() {
         setName('');
         setValue(0);
         setDate(new Date());
     }
 
-    function ClearFormCategoria(){
+    function ClearFormCategoria() {
         setCategoryName('');
     }
 
@@ -89,7 +130,10 @@ export function MainProvider({ children }) {
             ClearFormDivida, ClearFormCategoria,
             dividas, setDividas,
             criarCategory, categorys,
-            getCategoryName
+            getCategoryName,
+            deletarBanco,
+            criarList,
+            nameList, setNameList
         }}>
             {children}
         </MainContext.Provider>

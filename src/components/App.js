@@ -1,8 +1,10 @@
 import React from 'react'
 import Home from '../screens/Home'
-import CriarDivida from '../screens/CriarDivida'
+
 import EditarDivida from '../screens/EditarDivida'
 import CriarCategoria from '../screens/CriarCategoria'
+import CriarLista from '../screens/CriarLista'
+import CriarDivida from '../screens/CriarDivida'
 import { MainProvider } from '../context/MainContext'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -26,8 +28,9 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name='Home' component={Home} options={{ headerShown: false }}/>
         <Stack.Screen name='CriarCategoria' component={CriarCategoria} />
-        <Stack.Screen name='EditDivida' component={EditarDivida} options={{ headerShown: false }}/>
-        <Stack.Screen name='CriarDivida' component={CriarDivida} options={{ headerShown: false }}/>
+        <Stack.Screen name='EditDivida' component={EditarDivida} />
+        <Stack.Screen name='CriarDivida' component={CriarDivida} />
+        <Stack.Screen name='CriarLista' component={CriarLista} />
       </Stack.Navigator>
     )
   }
@@ -35,7 +38,7 @@ export default function App() {
   function RootStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name='CriarDivida' component={CriarDivida} options={{ headerShown: false }}/>
+        <Stack.Screen name='CriarDivida' component={CriarDivida}/>
       </Stack.Navigator>
     );
   }

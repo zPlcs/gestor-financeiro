@@ -3,7 +3,7 @@ import { View, TextInput, Text, Button, TouchableOpacity } from 'react-native'
 import { MainContext } from '../context/MainContext'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Picker } from '@react-native-picker/picker';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function CriarDivida() {

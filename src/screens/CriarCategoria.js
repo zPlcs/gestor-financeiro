@@ -3,6 +3,7 @@ import { TextInput, Text, Button } from 'react-native'
 import { MainContext } from '../context/MainContext'
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Picker } from '@react-native-picker/picker';
 
 export default function CriarCategoria() {
     const navigation = useNavigation();
