@@ -16,7 +16,6 @@ export default function Home() {
     const navCriarDivida = () => {
         navigation.navigate('CriarDivida')
     }
-    
     const {
         dividas
     } = useContext(MainContext);
@@ -24,12 +23,13 @@ export default function Home() {
     return (
         <SafeAreaView>
             <HomeHeader />
+            <Button title='Go to Criar Categoria' onPress={nav} />
             <Button title='Go to Criar Categoria' onPress={navCriarCategoria}/>
             <Button title='Criar Divida' onPress={navCriarDivida}/>
             <Button title='Criar Lista' onPress={() => {}}/>
             <Button title='Criar Item' onPress={() => {}}/>
-            <Text>HomePage</Text>
 
+            <Text>HomePage</Text>
             <FlatList
                 data={dividas}
                 keyExtractor={(p) => p.id}
