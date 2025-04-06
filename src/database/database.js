@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 
 export const getDBConnection = async () => {
-    return await SQLite.openDatabaseAsync('GenFinances_V1.db');
+    return await SQLite.openDatabaseAsync('GenFinances_V2.db');
 };
 
 export const initDB = async () => {
@@ -198,6 +198,17 @@ export const updateDivida = async (id, divida) => {
     }
 }
 
+export const updateList = async (id, list) => {
+    try {
+        const db = await getDBConnection();
+        await db.runAsync(`UPDATE lists SET name = ?, template = ? WHERE id = ?`, [list.nameList, list.template, id]);
+        return true;
+    } catch (error) {
+        console.error('Erro ao tentar atualizar lista (Func. updateList => database.js', error)
+        return false;
+    }
+}
+
 // CRUD (DELETE)
 
 export const deleteDivida = async (id) => {
@@ -212,10 +223,21 @@ export const deleteDivida = async (id) => {
 
 };
 
-// DELETE DATABASE (DONT USE IN CURRENT DATABASE => GenFinances_V4)
+export const deleteList = async (id) => {
+    try{
+        const db = await getDBConnection();
+        await db.runAsync(`DELETE FROM lists WHERE id = $id`, {$id: id });
+        return true;
+    }catch(error){
+        console.error('Erro ao tentar apagar lista (Func. deleteList => database.js):', error)
+        return false;
+    }
+}
+
+// DELETE DATABASE (DONT USE IN CURRENT DATABASE => GenFinances_V1)
 export const deleteDatabase = async () => {
     try {
-        await SQLite.deleteDatabaseAsync('GenFinances_V4.db');
+        await SQLite.deleteDatabaseAsync('GenFinances_V1.db');
         console.log('Banco de dados deletado');
     } catch (error) {
         console.error('Erro ao deletar banco de dados:', error);

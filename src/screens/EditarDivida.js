@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, TextInput, Text, Button, TouchableOpacity } from 'react-native'
+import { TextInput, Text, Button, TouchableOpacity,SafeAreaView } from 'react-native'
 import { MainContext } from '../context/MainContext'
-import { useRoute } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EditarDivida() {

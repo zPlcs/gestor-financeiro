@@ -9,7 +9,9 @@ import {
     addCategory,
     deleteDatabase,
     createList,
-    getLists
+    getLists,
+    deleteList,
+    updateList
 } from '../database/database'
 
 
@@ -44,7 +46,47 @@ export function MainProvider({ children }) {
 
 // CRUD (UPDATE)
 
+const editarDivida = async (id, novosDados) => {
+    try {
+        await updateDivida(id, novosDados);
+        const updatedDividas = await getDivida();
+        setDividas(updatedDividas);
+    } catch (error) {
+        console.error('Erro ao editar')
+    }
+}
+
+const atualizarList = async (id, novosDados) => {
+    try{
+        await updateList(id, novosDados);
+        const updatedLists = await getLists();
+        setLists(updatedLists);
+    } catch(error){
+        console.error('Erro ao atualizar lista (Func. atualizarList() => MainContext.js', error)
+    }
+}
+
 // (CRUD) (DELETE)
+
+const deletarDivida = async (id) => {
+    try {
+        await deleteDivida(id);
+        const updatedDividas = await getDivida();
+        setDividas(updatedDividas);
+    } catch (error) {
+        console.error('Erro ao tentar excluir', error)
+    }
+}
+
+const deletarList = async (id) => {
+    try{
+        await deleteList(id);
+        const updatedLists = await getLists();
+        setLists(updatedLists);
+    } catch(error){
+        console.error('Erro ao apagar a lista', error)
+    }
+}
 
     const criarDivida = async (novaDivida) => {
         try {
@@ -64,25 +106,9 @@ export function MainProvider({ children }) {
         }
     }
 
-    const deletarDivida = async (id) => {
-        try {
-            await deleteDivida(id);
-            const updatedDividas = await getDivida();
-            setDividas(updatedDividas);
-        } catch (error) {
-            console.error('Erro ao tentar excluir', error)
-        }
-    }
 
-    const editarDivida = async (id, novosDados) => {
-        try {
-            await updateDivida(id, novosDados);
-            const updatedDividas = await getDivida();
-            setDividas(updatedDividas);
-        } catch (error) {
-            console.error('Erro ao editar')
-        }
-    }
+
+
 
     const criarCategory = async (newCategory) => {
         try {
@@ -133,7 +159,9 @@ export function MainProvider({ children }) {
             getCategoryName,
             deletarBanco,
             criarList,
-            nameList, setNameList
+            nameList, setNameList,
+            lists, deletarList,
+            atualizarList
         }}>
             {children}
         </MainContext.Provider>

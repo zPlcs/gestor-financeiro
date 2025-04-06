@@ -6,10 +6,13 @@ import {
     Button
 } from 'react-native'
 
+import { useNavigation } from '@react-navigation/native';
+
 import { MainContext } from '../context/MainContext'
 import { Picker } from '@react-native-picker/picker';
 
 export default function CreateList() {
+    const navigation = useNavigation();
     const {
         nameList, setNameList,
         criarList
@@ -24,6 +27,8 @@ export default function CreateList() {
                 template,
             };
             await criarList(newList);
+            setNameList('')
+            navigation.goBack();    
         } catch (error) {
             console.error('Falha ao criar lista (func. CriarList() => CriarLista.js', error)
         }

@@ -18,8 +18,9 @@ export default function Home() {
         navigation.navigate('CriarDivida')
     }
 
-    const navCriarLista = () => {
-        navigation.navigate('CriarLista')
+
+    const navListas = () => {
+        navigation.navigate('Listas')
     }
     const {
         dividas, deletarBanco
@@ -29,9 +30,9 @@ export default function Home() {
         <SafeAreaView>
             <HomeHeader />
             <Button title='Criar Categoria (divida)' onPress={navCriarCategoria}/>
-            <Button title='Criar Categoria (lista)' onPress={() => {}}/>
+            <Button title='Criar Categoria (item)' onPress={() => {}}/>
             <Button title='Criar Divida' onPress={navCriarDivida}/>
-            <Button title='Criar Lista' onPress={navCriarLista}/>
+
             <Button title='Criar Item' onPress={() => {}}/>
             {/* ONLY USE TO DELETE DE DATABASE <Button title='Deletar banco' onPress={deletarBanco}/> */}
             <Text>HomePage</Text>
