@@ -23,7 +23,6 @@ export default function Home() {
     return (
         <SafeAreaView>
             <HomeHeader />
-            <Button title='Go to Criar Categoria' onPress={nav} />
             <Button title='Go to Criar Categoria' onPress={navCriarCategoria}/>
             <Button title='Criar Divida' onPress={navCriarDivida}/>
             <Button title='Criar Lista' onPress={() => {}}/>
