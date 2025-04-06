@@ -9,8 +9,12 @@ import { useNavigation } from '@react-navigation/native';
 export default function Home() {
     const navigation = useNavigation();
 
-    const nav = () => {
+    const navCriarCategoria = () => {
         navigation.navigate('CriarCategoria')
+    }
+
+    const navCriarDivida = () => {
+        navigation.navigate('CriarDivida')
     }
     
     const {
@@ -20,7 +24,10 @@ export default function Home() {
     return (
         <SafeAreaView>
             <HomeHeader />
-            <Button title='Go to Criar Categoria' onPress={nav}/>
+            <Button title='Go to Criar Categoria' onPress={navCriarCategoria}/>
+            <Button title='Criar Divida' onPress={navCriarDivida}/>
+            <Button title='Criar Lista' onPress={() => {}}/>
+            <Button title='Criar Item' onPress={() => {}}/>
             <Text>HomePage</Text>
 
             <FlatList

@@ -24,6 +24,13 @@ export default function EditarDivida() {
     } = useContext(MainContext)
 
     useEffect(() => {
+        const [day, month, year] = dividaDate.split('/');
+        const originalDate = new Date(year, month - 1, day);
+
+        // Inicializar os estados com os valores da dívida
+        setName(dividaName);
+        setValue(dividaValue);
+        setDate(originalDate);
         return () => {
             ClearFormDivida();
         };
@@ -31,16 +38,24 @@ export default function EditarDivida() {
 
     const handleEditar = async () => {
         try {
-            const updatedData = {
-                name: name || dividaName,
-                value: value || dividaValue,
-                date: formatDate(date) || dividaDate
+            const updatedData = { name, value, date: formatDate(date) }
+            if (name !== dividaName) {
+                updatedData.name = name;
             }
-            const hasChanged = name !== dividaName || value !== dividaValue || date !== dividaDate;
 
-            if (hasChanged) {
-                await editarDivida(dividaID, updatedData);
+            if (value !== dividaValue) {
+                updatedData.value = value;
             }
+
+            const currentFormattedDate = formatDate(date);
+            if (currentFormattedDate !== dividaDate) {
+                updatedData.date = currentFormattedDate;
+            }
+
+            if(name !== dividaName || value !== dividaValue || date !== dividaDate){
+                await editarDivida(dividaID, updatedData); 
+            }
+
             ClearFormDivida();
             navigation.goBack();
         } catch (error) {
@@ -50,7 +65,7 @@ export default function EditarDivida() {
     const [show, setShow] = useState(false);
 
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
+        const currentDate = selectedDate || date;;
         setShow(false);
         setDate(currentDate);
     };
@@ -59,15 +74,14 @@ export default function EditarDivida() {
         setShow(true);
     };
 
-    const formatDate = (date) => {
-        // Se não for um objeto Date válido, retorne um valor padrão (ou trate o erro)
-        if (!(date instanceof Date) || isNaN(date.getTime())) {
-            return "Data inválida"; // Ou retorne uma data padrão: return "01/01/1970";
+    const formatDate = (dateObj) => {
+        if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) {
+            return dividaDate; // Retorna a data original se a nova for inválida
         }
 
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
         return `${day}/${month}/${year}`;
     };
 

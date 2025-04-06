@@ -17,7 +17,6 @@ export default function App() {
     return (
       <Tab.Navigator>
         <Tab.Screen name='HomeTab' component={HomeStack} options={{ headerShown: false }}/>
-        <Tab.Screen name='CriarDividatTab' component={RootStack} options={{ headerShown: false }}/>
       </Tab.Navigator>
     );
   }
@@ -28,6 +27,7 @@ export default function App() {
         <Stack.Screen name='Home' component={Home} options={{ headerShown: false }}/>
         <Stack.Screen name='CriarCategoria' component={CriarCategoria} />
         <Stack.Screen name='EditDivida' component={EditarDivida} options={{ headerShown: false }}/>
+        <Stack.Screen name='CriarDivida' component={CriarDivida} options={{ headerShown: false }}/>
       </Stack.Navigator>
     )
   }
