@@ -13,7 +13,7 @@ export const initDB = async () => {
                 name TEXT NOT NULL UNIQUE,
                 template TEXT CHECK(template IN ('Compras', 'Simples', 'Mensal'))
             );
-            `);
+        `);
 
         await db.execAsync(`
             CREATE TABLE IF NOT EXISTS debt (
@@ -22,68 +22,69 @@ export const initDB = async () => {
                 name TEXT NOT NULL,
                 value REAL NOT NULL,
                 date TEXT NOT NULL,
-                category_id INTEGER,
+                category_id INTEGER NOT NULL,
                 paymentType TEXT CHECK(paymentType IN ('Parcelado', 'Compra Única', 'Recorrente')),
                 installments INTEGER DEFAULT 1,
                 FOREIGN KEY (list_id) REFERENCES lists(id) ON DELETE CASCADE,
                 FOREIGN KEY (category_id) REFERENCES categorys_debts(id) ON DELETE SET NULL
             );
-            `);
+        `);
 
         await db.execAsync(`
-            CREATE TABLE IF NOT EXISTS items (
+            CREATE TABLE IF NOT EXISTS item (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 list_id INTEGER NOT NULL,
                 name TEXT NOT NULL,
                 value REAL NOT NULL,
-                category_id INTEGER,
+                category_id INTEGER NOT NULL,
                 checked BOOLEAN DEFAULT 0,
                 FOREIGN KEY (list_id) REFERENCES lists(id) ON DELETE CASCADE,
                 FOREIGN KEY (category_id) REFERENCES categorys_items(id) ON DELETE SET NULL
             );
-            `);
+        `);
 
         await db.execAsync(`
             CREATE TABLE IF NOT EXISTS categorys_debts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL UNIQUE
             );
-            `);
+        `);
 
         await db.execAsync(`
             CREATE TABLE IF NOT EXISTS categorys_items (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL UNIQUE
             );
-            `);
+        `);
+
         console.log('Tabelas criadas');
     } catch (error) {
-        console.error('Erro ao criar tabela (Func. initDB() => database.js)', error)
+        console.error('Erro ao criar tabela (Func. initDB() => database.js)', error);
     }
 };
 
 // CRUD <LISTAS>
-
 export const createList = async (list) => {
     try {
         const db = await getDBConnection();
         const result = await db.runAsync(
-            `INSERT INTO lists (name, template) VALUES (?, ?)`, [list.name, list.template || 'Simples']
+            `INSERT INTO lists (name, template) VALUES (?, ?)`,
+            [list.name, list.template || 'Simples']
         );
         return result.lastInsertRowId;
     } catch (error) {
-        console.error('Erro ao criar lista (Func. createList() => database.js', error)
+        console.error('Erro ao criar lista (Func. createList() => database.js)', error);
     }
-}
+};
 
 export const getList = async () => {
     try {
         const db = await getDBConnection();
         const allRows = await db.getAllAsync(`
-        SELECT 
-            id,
-            name,
-            template
+            SELECT 
+                id,
+                name,
+                template
             FROM lists
         `);
         console.log('Listas carregadas.');
@@ -92,49 +93,49 @@ export const getList = async () => {
         }
         return allRows;
     } catch (error) {
-        console.error('Erro ao carregar listas', error)
+        console.error('Erro ao carregar listas', error);
     }
-}
+};
 
 export const updateList = async (id, list) => {
     try {
         const db = await getDBConnection();
-        await db.runAsync(`
-        UPDATE lists SET 
-            name = ?, 
-            template = ? 
+        await db.runAsync(
+            `
+            UPDATE lists SET 
+                name = ?, 
+                template = ? 
             WHERE id = ?`,
             [list.nameList, list.template, id]
         );
         return true;
     } catch (error) {
-        console.error('Erro ao atualizar listas.', error)
+        console.error('Erro ao atualizar listas.', error);
     }
-}
+};
 
 export const deleteList = async (id) => {
     try {
         const db = await getDBConnection();
-        await db.runAsync(`
-        DELETE FROM lists WHERE
-         id = ?`,
+        await db.runAsync(
+            `
+            DELETE FROM lists WHERE id = ?`,
             [id]
         );
         return true;
     } catch (error) {
-        console.error('Erro ao deletar lista.', error)
+        console.error('Erro ao deletar lista.', error);
     }
-}
-
+};
 // CRUD <LISTAS>
 
 // CRUD <DIVIDAS>
-
 export const createDebt = async (listId, debt) => {
     try {
         const db = await getDBConnection();
         const result = await db.runAsync(
-            `INSERT INTO debt (
+            `
+            INSERT INTO debt (
                 list_id,
                 name,
                 value,
@@ -155,136 +156,248 @@ export const createDebt = async (listId, debt) => {
         );
         return result.lastInsertRowId;
     } catch (error) {
-        console.error('Erro ao criar divida.', error)
+        console.error('Erro ao criar divida.', error);
     }
-}
+};
 
 export const getDebt = async () => {
     try {
         const db = await getDBConnection();
         const allRows = await db.getAllAsync(`
-        SELECT
-            d.id,
-            d.name,
-            d.value,
-            d.date,
-            d.category_id,
-            c.name AS category_name,
-            d.paymentType,
-            d.installments
-        FROM debt d
-        LEFT JOIN categorys_debts c ON d.category_id = c.id
-        `)
-        console.log('Dividas carregadas.')
+            SELECT
+                d.id,
+                d.name,
+                d.value,
+                d.date,
+                d.category_id,
+                c.name AS category_name,
+                d.paymentType,
+                d.installments
+            FROM debt d
+            LEFT JOIN categorys_debts c ON d.category_id = c.id
+        `);
+        console.log('Dividas carregadas.');
         for (const row of allRows) {
-            console.log(row.id, row.value, row.name, row.date, row.category_id, row.category_name, row.paymentType, row.installments);
+            console.log(
+                row.id,
+                row.value,
+                row.name,
+                row.date,
+                row.category_id,
+                row.category_name,
+                row.paymentType,
+                row.installments
+            );
         }
         return allRows;
     } catch (error) {
-        console.error('Erro ao carregar dividas.', error)
+        console.error('Erro ao carregar dividas.', error);
     }
-}
+};
 
 export const updateDebt = async (id, debt) => {
     try {
         const db = await getDBConnection();
-        await db.runAsync(`
-        UPDATE debt SET
-            name = ?,
-            value = ?,
-            date = ?,
-            category_id = ?,
-            paymentType = ?,
-            installments = ?
-        WHERE id = ?
-        `, [
-            debt.name,
-            debt.value,
-            debt.date,
-            debt.category_id,
-            debt.paymentType,
-            debt.installments,
-            id
-        ])
+        await db.runAsync(
+            `
+            UPDATE debt SET
+                name = ?,
+                value = ?,
+                date = ?,
+                category_id = ?,
+                paymentType = ?,
+                installments = ?
+            WHERE id = ?`,
+            [
+                debt.name,
+                debt.value,
+                debt.date,
+                debt.category_id,
+                debt.paymentType,
+                debt.installments,
+                id
+            ]
+        );
     } catch (error) {
-        console.error('Erro ao atualizar divida.', error)
+        console.error('Erro ao atualizar divida.', error);
     }
-}
+};
 
 export const deleteDebt = async (id) => {
     try {
         const db = await getDBConnection();
-        await db.runAsync(`
-        DELETE FROM debt WHERE
-         id = ?`,
+        await db.runAsync(
+            `
+            DELETE FROM debt WHERE id = ?`,
             [id]
         );
         return true;
     } catch (error) {
-        console.error('Erro ao deletar divida', error)
+        console.error('Erro ao deletar divida', error);
     }
-}
-
+};
 // CRUD <DIVIDAS>
 
+// CRUD <ITENS>
+export const createItem = async (item) => {
+    try {
+        const db = await getDBConnection();
+        const result = await db.runAsync(
+            `
+            INSERT INTO item (listId, name, value, category_id, checked) 
+            VALUES (?, ?, ?, ?, ?)`,
+            [item.listId, item.name, item.value, item.category_id, item.checked]
+        );
+        return result.lastInsertRowId;
+    } catch (error) {
+        console.error('Erro ao criar item', error);
+    }
+};
 
-export const addCategory = async (category) => {
+export const getItem = async () => {
+    try {
+        const db = await getDBConnection();
+        const allRows = await db.getAllAsync(`SELECT * FROM item`);
+        console.log('Itens carregados.');
+        for (const row of allRows) {
+            console.log(row.id, row.listId, row.name, row.value, row.category_id, row.checked);
+        }
+    } catch (error) {
+        console.error('Erro ao carregar itens', error);
+    }
+};
+
+export const updateItem = async (id, item) => {
+    try {
+        const db = await getDBConnection();
+        await db.runAsync(
+            `
+            UPDATE item SET
+                name = ?,
+                value = ?,
+                category_id = ?,
+                checked = ?
+            WHERE id = ?`,
+            [item.name, item.value, item.category_id, item.checked, id]
+        );
+    } catch (error) {
+        console.error('Erro ao atualizar item', error);
+    }
+};
+
+export const deleteItem = async (id) => {
+    try {
+        const db = await getDBConnection();
+        await db.runAsync(
+            `
+            DELETE FROM item WHERE id = ?`,
+            [id]
+        );
+        return true;
+    } catch (error) {
+        console.error('Erro ao deletar item', error);
+    }
+};
+// CRUD <ITENS>
+
+// CRUD <CATEGORIAS - DIVIDAS>
+export const createCategoryDebt = async (categoryDebt) => {
     try {
         const db = await getDBConnection();
         const result = await db.runAsync(
             `INSERT INTO categorys_debts (name) VALUES (?)`,
-            [category.categoryName]
+            [categoryDebt.name]
         );
         return result.lastInsertRowId;
     } catch (error) {
-        console.error('Erro ao criar categoria (Func. addCategorys() => database.js):', error)
+        console.error('Erro ao criar categoria de dívida', error);
     }
 };
 
-// CRUD (READ)
-
-
-export const getCategorys = async () => {
+export const getCategoryDebt = async () => {
     try {
         const db = await getDBConnection();
         const allRows = await db.getAllAsync(`SELECT * FROM categorys_debts`);
-        console.log('Dados de <categorys.table> carregados.')
-        for (const row of allRows) {
-            console.log(row.id, row.name);
-        }
+        console.log('Categorias de dívidas carregadas.');
         return allRows;
     } catch (error) {
-        console.error('Erro ao ler categorias (Func. getCategorys() => database.js)', error)
+        console.error('Erro ao carregar categorias de dívidas', error);
     }
 };
 
-// CRUD (UPDATE)
-
-export const updateDivida = async (id, divida) => {
+export const updateCategoryDebt = async (id, categoryDebt) => {
     try {
         const db = await getDBConnection();
-        await db.runAsync(`UPDATE debt SET name = ?, value= ?, date = ? WHERE id = ?`, [divida.name, divida.value, divida.date, id]);
+        await db.runAsync(
+            `UPDATE categorys_debts SET name = ? WHERE id = ?`,
+            [categoryDebt.name, id]
+        );
         return true;
     } catch (error) {
-        console.error('Erro ao atualizar', error)
-        return false;
+        console.error('Erro ao atualizar categoria de dívida', error);
     }
-}
-
-// CRUD (DELETE)
-
-export const deleteDivida = async (id) => {
-    try {
-        const db = await getDBConnection();
-        await db.runAsync(`DELETE FROM debt WHERE id = $id`, { $id: id });
-        return true;
-    } catch (error) {
-        console.error('Erro ao tentar apagar divida (Func. deleteDivida => database.js):', error)
-        return false;
-    }
-
 };
 
+export const deleteCategoryDebt = async (id) => {
+    try {
+        const db = await getDBConnection();
+        await db.runAsync(`DELETE FROM categorys_debts WHERE id = ?`, [id]);
+        return true;
+    } catch (error) {
+        console.error('Erro ao deletar categoria de dívida', error);
+    }
+};
+
+// CRUD <CATEOGIRAS - DIVIDAS>
+
+// CRUD <CATEGORIAS - ITENS>
+
+export const createCategoryItem = async (categoryItem) => {
+    try {
+        const db = await getDBConnection();
+        const result = await db.runAsync(
+            `INSERT INTO categorys_items (name) VALUES (?)`,
+            [categoryItem.name]
+        );
+        return result.lastInsertRowId;
+    } catch (error) {
+        console.error('Erro ao criar categoria de item', error);
+    }
+};
+
+export const getCategoryItem = async () => {
+    try {
+        const db = await getDBConnection();
+        const allRows = await db.getAllAsync(`SELECT * FROM categorys_items`);
+        console.log('Categorias de itens carregadas.');
+        return allRows;
+    } catch (error) {
+        console.error('Erro ao carregar categorias de itens', error);
+    }
+};
+
+export const updateCategoryItem = async (id, categoryItem) => {
+    try {
+        const db = await getDBConnection();
+        await db.runAsync(
+            `UPDATE categorys_items SET name = ? WHERE id = ?`,
+            [categoryItem.name, id]
+        );
+        return true;
+    } catch (error) {
+        console.error('Erro ao atualizar categoria de item', error);
+    }
+};
+
+export const deleteCategoryItem = async (id) => {
+    try {
+        const db = await getDBConnection();
+        await db.runAsync(`DELETE FROM categorys_items WHERE id = ?`, [id]);
+        return true;
+    } catch (error) {
+        console.error('Erro ao deletar categoria de item', error);
+    }
+};
 
 // DELETE DATABASE (DONT USE IN CURRENT DATABASE => GenFinances_V4)
 export const deleteDatabase = async () => {
