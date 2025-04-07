@@ -109,7 +109,7 @@ export function MainProvider({ children }) {
 
     const criarDivida = async (listaId, novaDivida) => {
         try {
-            await createDivida(listaId, novaDivida);
+            await createDebt(listaId, novaDivida);
             const dividaAtualizada = getDebt();
             setDivida(dividaAtualizada);
         } catch (error) {
