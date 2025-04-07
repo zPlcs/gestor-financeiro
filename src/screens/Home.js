@@ -23,7 +23,7 @@ export default function Home() {
         navigation.navigate('Listas')
     }
     const {
-        dividas, deletarBanco
+        dividas, deletarBD
     } = useContext(MainContext);
 
     return (
@@ -34,7 +34,7 @@ export default function Home() {
             <Button title='Criar Divida' onPress={navCriarDivida}/>
 
             <Button title='Criar Item' onPress={() => {}}/>
-            {/* ONLY USE TO DELETE DE DATABASE <Button title='Deletar banco' onPress={deletarBanco}/> */}
+            {/* ONLY USE TO DELETE DE DATABASE <Button title='Deletar banco' onPress={deletarBD}/> */}
             <Text>HomePage</Text>
             <FlatList
                 data={dividas}
