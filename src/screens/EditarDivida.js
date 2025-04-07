@@ -66,7 +66,6 @@ export default function EditarDivida() {
         const currentDate = selectedDate || date;;
         setShow(false);
         setDate(currentDate);
-        console.log('test')
     };
 
     const showCalendar = () => {
