@@ -40,21 +40,25 @@ import {
 export const MainContext = createContext();
 
 export function MainProvider({ children }) {
+
+
+    
     useEffect(() => {
         const loadData = async () => {
             await initDB();
-
+  
             const listsFromDB = await getList();
             const debtsFromDB = await getDebt();
             const itemsFromDB = await getItem();
             const categorysDebtFromDB = await getCategoryDebt();
             const categorysItemFromDB = await getCategoryItem();
-
+           
             setList(listsFromDB);
             setDebt(debtsFromDB);
             setItem(itemsFromDB);
-            setCategorysDebtFromDB(categorysDebtFromDB);
-            setCategorysItemFromDB(categorysItemFromDB);
+            setCategoryDebt(categorysDebtFromDB);
+            setCategoryItem(categorysItemFromDB);
+            console.log(categoryDebt)
         };
         loadData();
     }, []);
@@ -66,10 +70,11 @@ export function MainProvider({ children }) {
 
     // ARRAYS
     const [list, setList] = useState([]);
-    const [divida, setDivida] = useState([]);
+    const [debt, setDebt] = useState([]);
     const [item, setItem] = useState([]);
     const [categoryDebt, setCategoryDebt] = useState([]);
     const [categoryItem, setCategoryItem] = useState([]);
+    const [categoryItemId, setCategoryItemId] = useState([])
 
     // CRUD LISTAS
 
@@ -110,8 +115,8 @@ export function MainProvider({ children }) {
     const criarDivida = async (listaId, novaDivida) => {
         try {
             await createDebt(listaId, novaDivida);
-            const dividaAtualizada = getDebt();
-            setDivida(dividaAtualizada);
+            const dividaAtualizada = await getDebt();
+            setDebt(dividaAtualizada);
         } catch (error) {
             console.error('Erro ao criar divida', error)
         }
@@ -120,8 +125,8 @@ export function MainProvider({ children }) {
     const atualizarDivida = async (id, novaDivida) => {
         try {
             await updateDebt(id, novaDivida);
-            const dividaAtualizada = getDebt();
-            setDivida(dividaAtualizada);
+            const dividaAtualizada = await getDebt();
+            setDebt(dividaAtualizada);
         } catch (error) {
             console.error('Erro ao atualizar a divida', error)
         }
@@ -130,8 +135,8 @@ export function MainProvider({ children }) {
     const deletarDivida = async (id) => {
         try {
             await deleteDebt(id);
-            const dividaAtualizada = getDebt();
-            setDivida(dividaAtualizada)
+            const dividaAtualizada = await getDebt();
+            setDebt(dividaAtualizada)
         } catch (error) {
             console.error('Erro ao deletar a divida', error)
         }
@@ -144,7 +149,7 @@ export function MainProvider({ children }) {
     const criarItem = async (listaId, novoItem) => {
         try {
             await createItem(listaId, novoItem);
-            const itemAtualizado = getItem();
+            const itemAtualizado = await getItem();
             setItem(itemAtualizado)
         } catch (error) {
             console.error('Erro ao criar item', error)
@@ -154,7 +159,7 @@ export function MainProvider({ children }) {
     const atualizarItem = async (id, novoItem) => {
         try {
             await updateItem(id, novoItem);
-            const itemAtualizado = getItem();
+            const itemAtualizado = await getItem();
             setItem(itemAtualizado);
         } catch (error) {
             console.error('Erro ao atualizar item', error)
@@ -164,7 +169,7 @@ export function MainProvider({ children }) {
     const deletarItem = async (id) => {
         try {
             await deleteItem(id);
-            const itemAtualizado = getItem();
+            const itemAtualizado = await getItem();
             setItem(itemAtualizado);
         } catch (error) {
             console.error('Erro ao deletar item', error)
@@ -175,20 +180,21 @@ export function MainProvider({ children }) {
 
     // CRUD CATEGORIAS (DIVIDAS)
 
-    const criarCategoriaDivida = async (dividaId, novaCategoriaDivida) => {
+    const criarCategoriaDivida = async (novaCategoriaDivida) => {
         try {
-            await createCategoryDebt(dividaId, novaCategoriaDivida);
-            const categoriaDividaAtualizada = getCategoryDebt();
+            await createCategoryDebt(novaCategoriaDivida);
+            const categoriaDividaAtualizada = await getCategoryDebt();
             setCategoryDebt(categoriaDividaAtualizada)
         } catch (error) {
             console.error('Erro ao criar categoria de divida', error)
         }
     }
 
+
     const atualizarCategoriaDivida = async (id, novaCategoriaDivida) => {
         try {
             await updateCategoryDebt(id, novaCategoriaDivida);
-            const categoriaDividaAtualizada = getCategoryDebt();
+            const categoriaDividaAtualizada = await getCategoryDebt();
             setCategoryDebt(categoriaDividaAtualizada)
         } catch (error) {
             console.error('Erro ao atualizar categoria de divida', error)
@@ -198,7 +204,7 @@ export function MainProvider({ children }) {
     const deletarCategoriaDivida = async (id) => {
         try {
             await deleteCategoryDebt(id);
-            const categoriaDividaAtualizada = getCategoryDebt();
+            const categoriaDividaAtualizada = await getCategoryDebt();
             setCategoryDebt(categoriaDividaAtualizada)
         } catch (error) {
             console.error('Erro ao deletar categoria de divida', error)
@@ -209,10 +215,10 @@ export function MainProvider({ children }) {
 
     // CRUD CATEGORIAS (ITENS)
 
-    const criarCategoriaItem = async (dividaId, novaCategoriaItem) => {
+    const criarCategoriaItem = async (novaCategoriaItem) => {
         try {
-            await createCategoryItem(dividaId, novaCategoriaItem);
-            const categoriaItemAtualizada = getCategoryItem();
+            await createCategoryItem(novaCategoriaItem);
+            const categoriaItemAtualizada = await getCategoryItem();
             setCategoryItem(categoriaItemAtualizada)
         } catch (error) {
             console.error('Erro ao criar categoria do item', error)
@@ -222,7 +228,7 @@ export function MainProvider({ children }) {
     const atualizarCategoriaItem = async (id, novaCategoriaItem) => {
         try {
             await updateCategoryItem(id, novaCategoriaItem);
-            const categoriaItemAtualizada = getCategoryItem();
+            const categoriaItemAtualizada = awaitgetCategoryItem();
             setCategoryItem(categoriaItemAtualizada);
         } catch (error) {
             console.error('Erro ao atualizar categoria do item', error)
@@ -232,7 +238,7 @@ export function MainProvider({ children }) {
     const deletarCategoriaItem = async (id) => {
         try {
             await deleteCategoryItem(id);
-            const categoriaItemAtualizada = getCategoryItem();
+            const categoriaItemAtualizada = awaitgetCategoryItem();
             setCategoryItem(categoriaItemAtualizada);
         } catch (error) {
             console.error('Erro ao deletar categoria do item', error)
@@ -322,10 +328,10 @@ export function MainProvider({ children }) {
 
             // ARRAYS
             list, setList,
-            divida, setDivida,
+            debt, setDebt,
             item, setItem,
             categoryDebt, setCategoryDebt,
-            categoryItem, setCategoryItem
+            categoryItem, setCategoryItem,
         }}>
             {children}
         </MainContext.Provider>

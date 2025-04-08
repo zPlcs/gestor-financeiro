@@ -165,6 +165,7 @@ export const getDebt = async () => {
         const db = await getDBConnection();
         const allRows = await db.getAllAsync(`
             SELECT
+                d.list_id,
                 d.id,
                 d.name,
                 d.value,
@@ -179,6 +180,7 @@ export const getDebt = async () => {
         console.log('Dividas carregadas.');
         for (const row of allRows) {
             console.log(
+                row.list_id,
                 row.id,
                 row.value,
                 row.name,
@@ -319,6 +321,9 @@ export const getCategoryDebt = async () => {
         const db = await getDBConnection();
         const allRows = await db.getAllAsync(`SELECT * FROM categorys_debts`);
         console.log('Categorias de dívidas carregadas.');
+        for (const row of allRows) {
+            console.log(row.id, row.name)
+        }
         return allRows;
     } catch (error) {
         console.error('Erro ao carregar categorias de dívidas', error);
@@ -370,6 +375,7 @@ export const getCategoryItem = async () => {
         const db = await getDBConnection();
         const allRows = await db.getAllAsync(`SELECT * FROM categorys_items`);
         console.log('Categorias de itens carregadas.');
+
         return allRows;
     } catch (error) {
         console.error('Erro ao carregar categorias de itens', error);

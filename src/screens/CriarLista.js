@@ -1,54 +1,51 @@
 import React, { useContext, useState } from 'react'
-import {
-    SafeAreaView,
-    Text,
-    TextInput,
-    Button
-} from 'react-native'
-
+import { SafeAreaView, Text, TextInput, Button } from 'react-native'
+import { MainContext } from '../context/MainContext';
+import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 
-import { MainContext } from '../context/MainContext'
-import { Picker } from '@react-native-picker/picker';
-
-export default function CreateList() {
+export default function CriarLista() {
     const navigation = useNavigation();
-    const {
-        nameList, setNameList,
-        criarList
-    } = useContext(MainContext);
 
-    const [template, setTemplate] = useState('Simples');
+    const [name, setName] = useState('');
+    const [selectedTemplate, setSelectedTemplate] = useState('Simples');
 
-    const CriarList = async () => {
+    const { criarLista } = useContext(MainContext)
+
+    const handleCreateList = async () => {
         try {
-            const newList = {
-                name: nameList,
-                template,
-            };
-            await criarList(newList);
-            setNameList('')
-            navigation.goBack();    
+            await criarLista({
+                name: name,
+                template: selectedTemplate
+            });
+            setName('');
+            setSelectedTemplate('Simples');
+            navigation.goBack();
         } catch (error) {
-            console.error('Falha ao criar lista (func. CriarList() => CriarLista.js', error)
+            console.error('Erro ao criar lista', error)
         }
     }
+
     return (
         <SafeAreaView>
-            <Text>Criar lista</Text>
+            <Text>Insira o nome:</Text>
             <TextInput
-                value={nameList}
-                onChangeText={setNameList}
+                value={name}
+                onChangeText={setName}
             />
-            <Text>Template</Text>
             <Picker
-                selectedValue={template}
-                onValueChange={(itemValue) => setTemplate(itemValue)}>
-                <Picker.Item label="Mensal" value="Mensal" />
+                selectedValue={selectedTemplate}
+                onValueChange={(itemValue) =>
+                    setSelectedTemplate(itemValue)
+                }>
                 <Picker.Item label="Simples" value="Simples" />
+                <Picker.Item label="Mensal" value="Mensal" />
                 <Picker.Item label="Compras" value="Compras" />
             </Picker>
-            <Button title='salvar lista' onPress={CriarList} />
+            <Button
+                title='Criar Lista'
+                onPress={handleCreateList}
+            />
         </SafeAreaView>
     );
 }
