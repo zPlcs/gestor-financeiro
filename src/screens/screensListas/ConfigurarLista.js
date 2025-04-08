@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { SafeAreaView, View, Text, TextInput, Button, FlatList } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MainContext } from '../../context/MainContext'
+import RenderDividas from '../screensDividas/RenderDividas'
 
 export default function ConfigurarLista() {
     const navigation = useNavigation();
@@ -60,10 +61,10 @@ export default function ConfigurarLista() {
                 <FlatList
                     data={debtsDaLista}
                     keyExtractor={key}
-                    renderItem={rend}
+                    renderItem={({item}) => <RenderDividas item={item}/>}
                 />
             ) : (
-                <Text style={{ textAlign: 'center', marginTop: 20 }}>
+                <Text>
                     Nenhuma dívida cadastrada nesta lista
                 </Text>
             )}
