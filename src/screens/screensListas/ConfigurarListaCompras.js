@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { SafeAreaView, View, Text, TextInput } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { MainContext } from '../context/MainContext'
+import { MainContext } from '../../context/MainContext'
 
 export default function ConfigurarListaCompras(){
     const route = useRoute();

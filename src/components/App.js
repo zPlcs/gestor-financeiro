@@ -5,7 +5,7 @@ import Listas from '../screens/Listas'
 import CriarLista from '../screens/CriarLista'
 import ConfigurarLista from '../screens/ConfigurarLista'
 import ConfigurarListaCompras from '../screens/ConfigurarListaCompras'
-import Dividas from '../screens/Dividas'
+import CriarDivida from '../screens/screensDividas/CriarDivida'
 import CategoriasDividas from '../screens/CategoriasDividas'
 
 import { MainProvider } from '../context/MainContext'
@@ -43,7 +43,7 @@ export default function App() {
         <Stack.Screen name='CriarLista' component={CriarLista} />
         <Stack.Screen name ='ConfigurarLista' component={ConfigurarLista} />
         <Stack.Screen name ='ConfigurarListaCompras' component={ConfigurarListaCompras} />
-        <Stack.Screen name ='Dividas' component={Dividas} />
+        <Stack.Screen name ='CriarDivida' component={CriarDivida} />
         <Stack.Screen name ='CategoriasDividas' component={CategoriasDividas} />
       </Stack.Navigator>
     )

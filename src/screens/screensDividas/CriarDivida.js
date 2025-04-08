@@ -1,11 +1,15 @@
 import React, { useState, useContext } from 'react'
-import { SafeAreaView, Text, Button, TextInput } from 'react-native'
-import { MainContext } from '../context/MainContext';
+import { SafeAreaView, Text, Button, TextInput, Platform } from 'react-native'
+import { MainContext } from '../../context/MainContext';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-export default function Dividas() {
+export default function CriarDivida() {
     const navigation = useNavigation();
+
+    const { criarDivida, categoryDebt } = useContext(MainContext)
+
     const route = useRoute();
     const {
         listId,
@@ -18,8 +22,19 @@ export default function Dividas() {
     const [paymentType, setPaymentType] = useState('Compra Única');
     const [installments, setInstallments] = useState(1);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [show, setShow] = useState(false);
 
-    const { criarDivida, categoryDebt, divida, setDivida } = useContext(MainContext)
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
+
+    const showDatepicker = () => {
+        setShow(true);
+    };
+
+
 
     const handleCriarDivida = async () => {
         try {
@@ -44,6 +59,23 @@ export default function Dividas() {
             <TextInput value={name} onChangeText={setName} />
             <Text>Value:</Text>
             <TextInput value={value} onChangeText={setValue} />
+            <Text>Data:</Text>
+            <View>
+                <Button onPress={showDatepicker} title="Selecionar Data" />
+            </View>
+            <Text style={{ margin: 20 }}>
+                Data selecionada: {date.toLocaleDateString()}
+            </Text>
+            {show && (
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode="date"
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                />
+            )}
             <Text>Categoria:</Text>
             <Picker
                 selectedValue={selectedCategory}

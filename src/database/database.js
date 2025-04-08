@@ -145,7 +145,7 @@ export const createDebt = async (listId, debt) => {
                 installments
             ) VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [
-                listId,
+                debt.listId,
                 debt.name,
                 debt.value,
                 debt.date,

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { SafeAreaView, View, Text, TextInput, Button, FlatList } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { MainContext } from '../context/MainContext'
+import { MainContext } from '../../context/MainContext'
 
 export default function ConfigurarLista() {
     const navigation = useNavigation();
@@ -16,8 +16,8 @@ export default function ConfigurarLista() {
 
     const debtsDaLista = debt.filter(d => d.list_id === listId);
 
-    const handleNavCriarDivida = () => {
-        navigation.navigate('Dividas', {
+    const handleCriarDividas = () => {
+        navigation.navigate('CriarDivida', {
             listId: listId,
             listName: listName
         })
@@ -34,8 +34,8 @@ export default function ConfigurarLista() {
     const rend = ({ item }) => {
         return (
             <View>
-                <Text>{item.listId}</Text>
-                <Text>{item.listName}</Text>
+                <Text>{listId}</Text>
+                <Text>{listName}</Text>
                 <Text>{item.name}</Text>
                 <Text>{item.value}</Text>
             </View>
@@ -49,7 +49,7 @@ export default function ConfigurarLista() {
             <Text>Você está editando a lista {listName} - {listId}</Text>
             <Button
                 title='Adicionar Divida'
-                onPress={handleNavCriarDivida}
+                onPress={handleCriarDividas}
             />
             <Button
                 title='Configurar Categorias'

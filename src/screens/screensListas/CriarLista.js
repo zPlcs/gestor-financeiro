@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { SafeAreaView, Text, TextInput, Button } from 'react-native'
-import { MainContext } from '../context/MainContext';
+import { MainContext } from '../../context/MainContext';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 
