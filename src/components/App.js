@@ -1,12 +1,13 @@
 import React from 'react'
 import Home from '../screens/Home'
 
-import Listas from '../screens/Listas'
-import CriarLista from '../screens/CriarLista'
-import ConfigurarLista from '../screens/ConfigurarLista'
-import ConfigurarListaCompras from '../screens/ConfigurarListaCompras'
+import Listas from '../screens/screensListas/Listas'
+import CriarLista from '../screens/screensListas/CriarLista'
+import ConfigurarLista from '../screens/screensListas/ConfigurarLista'
+import ConfigurarListaCompras from '../screens/screensListas/ConfigurarListaCompras'
 import CriarDivida from '../screens/screensDividas/CriarDivida'
-import CategoriasDividas from '../screens/CategoriasDividas'
+import CategoriasDividas from '../screens/screensCategoriasDividas/CategoriasDividas'
+import EditarDivida from '../screens/screensDividas/EditarDivida'
 
 import { MainProvider } from '../context/MainContext'
 
@@ -45,6 +46,7 @@ export default function App() {
         <Stack.Screen name ='ConfigurarListaCompras' component={ConfigurarListaCompras} />
         <Stack.Screen name ='CriarDivida' component={CriarDivida} />
         <Stack.Screen name ='CategoriasDividas' component={CategoriasDividas} />
+        <Stack.Screen name='EditarDivida' component={EditarDivida} />
       </Stack.Navigator>
     )
   }

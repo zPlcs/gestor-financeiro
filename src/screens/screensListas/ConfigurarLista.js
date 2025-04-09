@@ -32,18 +32,6 @@ export default function ConfigurarLista() {
         return p.id
     }
 
-    const rend = ({ item }) => {
-        return (
-            <View>
-                <Text>{listId}</Text>
-                <Text>{listName}</Text>
-                <Text>{item.name}</Text>
-                <Text>{item.value}</Text>
-            </View>
-
-        );
-    }
-
     return (
         <SafeAreaView>
             <Text>Configurar Lista</Text>
@@ -61,7 +49,7 @@ export default function ConfigurarLista() {
                 <FlatList
                     data={debtsDaLista}
                     keyExtractor={key}
-                    renderItem={({item}) => <RenderDividas item={item}/>}
+                    renderItem={({item}) => <RenderDividas item={item} listId={listId}/>}
                 />
             ) : (
                 <Text>

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { SafeAreaView, Text, Button, FlatList, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
-import { MainContext } from '../context/MainContext';
+import { MainContext } from '../../context/MainContext'
 
 export default function Listas() {
     const { list, deletarLista, categoryDebt, divida } = useContext(MainContext);

@@ -9,10 +9,14 @@ export default function RenderDividas({ item }) {
 
     const handleAtualizarDivida = () => {
         navigation.navigate('EditarDivida', {
-            listId: item.listId,
-            name: item.name,
-            value: item.value,
-            date: item.date,
+            list_id: item.list_id,
+            previousId: item.id,
+            previousName: item.name,
+            previousValue: item.value,
+            previousDate: item.date,
+            previousPaymentType: item.paymentType,
+            previousInstallments: item.installments,
+            previousCategory_id: item.category_id
         })
     }
 
@@ -25,8 +29,7 @@ export default function RenderDividas({ item }) {
     }
     return (
         <View>
-            <Text>{listId}</Text>
-            <Text>{listName}</Text>
+            <Text>{item.list_id}</Text>
             <Text>{item.name}</Text>
             <Text>{item.value}</Text>
             <Text>{item.date}</Text>

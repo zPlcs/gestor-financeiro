@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { SafeAreaView, Text, Button, TextInput, Platform } from 'react-native'
+import { SafeAreaView, Text, Button, TextInput, Platform, View } from 'react-native'
 import { MainContext } from '../../context/MainContext';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -20,7 +20,7 @@ export default function CriarDivida() {
     const [value, setValue] = useState(0);
     const [date, setDate] = useState(new Date());
     const [paymentType, setPaymentType] = useState('Compra Única');
-    const [installments, setInstallments] = useState(1);
+    const [installments, setInstallments] = useState(0);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [show, setShow] = useState(false);
 
@@ -35,16 +35,15 @@ export default function CriarDivida() {
     };
 
 
-
     const handleCriarDivida = async () => {
         try {
-            const novaDivida = { listId, name, value, date, paymentType, installments, category_id: selectedCategory }
+            const novaDivida = { name, value, date, paymentType, installments, category_id: selectedCategory }
             await criarDivida(listId, novaDivida)
             setName('');
             setValue(0);
             setDate(new Date());
             setPaymentType('Compra Única');
-            setInstallments(1);
+            setInstallments(0);
             setSelectedCategory(null);
             navigation.goBack()
         } catch (error) {
@@ -107,7 +106,7 @@ export default function CriarDivida() {
                     <Text>Número de Parcelas:</Text>
                     <TextInput
                         value={installments.toString()}
-                        onChangeText={(text) => setInstallments(parseInt(text) || 1)}
+                        onChangeText={(text) => setInstallments(parseInt(text) || 0)}
                     />
                 </View>
             )}
