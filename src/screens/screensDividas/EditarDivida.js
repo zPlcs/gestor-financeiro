@@ -117,3 +117,101 @@ export default function EditarDivida() {
         </SafeAreaView>
     );
 }
+
+{/* 
+    import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  Text,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  View
+} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+export const App = () => {
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
+  const [divida, setDivida] = useState([]);
+  const [dataDisplay, setDataDisplay] = useState('20/05/2025'); // Estado para controlar 
+
+  const criarDivida = () => {
+    const novaDivida = { id: new Date().toString(), name: name, date: dataDisplay };
+    setDivida([...divida, novaDivida]);
+    setDate(new Date()) // -> não vai mudar de novo, por que fecharia a página
+    setName('')
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    if (currentDate) {
+      setDate(currentDate);
+      setDataDisplay(currentDate.toLocaleDateString()); // Atualiza o display quando o usuário seleciona
+    }
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+  const rend = ({ item }) => {
+    return(
+      <View>
+        <Text>{item.name}</Text>
+        <Text>{item.date}</Text>
+      </View>
+    );
+  }
+
+  const key = (p) => {
+    return p.id
+  }
+
+  return (
+    <SafeAreaView style={{ padding: 50 }}>
+    <Text>Insira o nome:</Text>
+    <TextInput 
+    value={name}
+    onChangeText={setName}
+    />
+    <Text>Insira a data:</Text>
+      <TouchableOpacity onPress={showDatepicker}>
+        <Text>{dataDisplay}</Text>
+      </TouchableOpacity>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+      <Button title='Submit' onPress={criarDivida}/>
+
+      <FlatList 
+      data={divida}
+      keyExtractor={key}
+      renderItem={rend}
+      />
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+    */}
