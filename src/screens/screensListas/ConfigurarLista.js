@@ -21,13 +21,13 @@ export default function ConfigurarLista() {
 
 
     const verify = () => {
-        if(dividaId){
+        if (dividaId) {
             handleCriarDividas()
         } else {
             Alert.alert('Nenhuma categoria criada', `Para criar uma divida, primeiro crie uma categoria.`, [
                 {
                     text: 'Ok',
-                    onPress: () => {},
+                    onPress: () => { },
                     style: 'cancel',
                 }
             ]);
@@ -65,10 +65,10 @@ export default function ConfigurarLista() {
 
             {debtsDaLista.length > 0 ? (
                 <FlatList
-                style={{ height: 400 }}
+                    style={{ height: 400 }}
                     data={debtsDaLista}
                     keyExtractor={key}
-                    renderItem={({item}) => <RenderDividas item={item} listId={listId}/>}
+                    renderItem={({ item }) => <RenderDividas item={item} listId={listId} />}
                 />
             ) : (
                 <Text>

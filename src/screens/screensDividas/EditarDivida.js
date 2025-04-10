@@ -6,10 +6,10 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EditarDivida() {
-    useEffect(()=>{
+    useEffect(() => {
         setDataDisplay(previousDate);
         console.log('Carregou')
-    },[])
+    }, [])
 
 
     const navigation = useNavigation();
@@ -43,8 +43,8 @@ export default function EditarDivida() {
         if (currentDate) {
             setDate(currentDate);
             setDataDisplay(currentDate.toLocaleDateString()); // Atualiza o display quando o usuário seleciona
-          }
-        };
+        }
+    };
 
     const showDatepicker = () => {
         setShowDatePicker(true);
@@ -53,7 +53,7 @@ export default function EditarDivida() {
     const showMode = (currentMode) => {
         setShow(true);
         setMode(currentMode);
-      };
+    };
 
 
     const handleAtualizarDivida = async () => {

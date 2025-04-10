@@ -60,7 +60,7 @@ export default function CriarDivida() {
             <Text>Data:</Text>
             <TouchableOpacity
                 onPress={showDatepicker}
-                style={{ padding:15 }}
+                style={{ padding: 15 }}
             >
                 <Text>{date.toLocaleDateString()}</Text>
             </TouchableOpacity>

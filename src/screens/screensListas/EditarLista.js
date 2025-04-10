@@ -26,7 +26,7 @@ export default function EditarList() {
 
     const handleEditar = async () => {
         try {
-            const updatedData = { nameList, template: selectedTemplateList  }
+            const updatedData = { nameList, template: selectedTemplateList }
             await atualizarList(selectedListID, updatedData);
             navigation.goBack();
         } catch (error) {

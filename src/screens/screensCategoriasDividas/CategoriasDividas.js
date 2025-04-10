@@ -8,7 +8,7 @@ export default function CategoriasDividas() {
     const navigation = useNavigation();
     const { categoryDebt } = useContext(MainContext)
 
-    const handleCriarCategoriaDivida =  () => {
+    const handleCriarCategoriaDivida = () => {
         navigation.navigate('CriarCategoriaDivida')
     }
 
@@ -20,10 +20,10 @@ export default function CategoriasDividas() {
                 onPress={handleCriarCategoriaDivida}
             />
 
-            <FlatList 
+            <FlatList
                 data={categoryDebt}
                 keyExtractor={(p) => p.id}
-                renderItem={({item}) => <RenderCategoriasDividas item={item}/>}
+                renderItem={({ item }) => <RenderCategoriasDividas item={item} />}
             />
         </SafeAreaView>
 

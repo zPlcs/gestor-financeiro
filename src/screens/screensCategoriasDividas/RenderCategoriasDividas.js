@@ -18,8 +18,7 @@ export default function RenderCategoriasDividas({ item }) {
     const dividaId = debt.find(cat => cat.category_id === item.id)
 
     const verify = async () => {
-        try{
-            
+        try {
             if (dividaId) {
                 console.log('encontrado')
                 cancelarExclusaoCategoriaDivida()
@@ -27,22 +26,22 @@ export default function RenderCategoriasDividas({ item }) {
                 console.log('Não encontrado')
                 await deletarCategoriaDivida(item.id)
             }
-        } catch (error){
+        } catch (error) {
             console.error('Erro ao tentar verificar categoria id', error)
         }
 
     }
 
-    const cancelarExclusaoCategoriaDivida =  async () => {
-        try{
+    const cancelarExclusaoCategoriaDivida = async () => {
+        try {
             Alert.alert('Não foi possível apagar a categoria', `A categoria "${item.name}" está atrelada a uma dívida existente.`, [
                 {
                     text: 'Ok',
-                    onPress: () => {},
+                    onPress: () => { },
                     style: 'cancel',
                 }
             ]);
-        } catch(error){
+        } catch (error) {
             console.error('Erro ao deletar', error)
         }
 
@@ -52,7 +51,7 @@ export default function RenderCategoriasDividas({ item }) {
 
     const handleDeletarCategoriaDivida = async () => {
         try {
-            verify();  
+            verify();
         } catch (error) {
             console.error('Erro ao deletar categoria da divida', error)
         }

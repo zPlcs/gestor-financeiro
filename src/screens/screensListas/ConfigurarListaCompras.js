@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, TextInput } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MainContext } from '../../context/MainContext'
 
-export default function ConfigurarListaCompras(){
+export default function ConfigurarListaCompras() {
     const route = useRoute();
     const {
         listId,
@@ -11,9 +11,9 @@ export default function ConfigurarListaCompras(){
     } = route.params;
 
     const { criarDivida } = useContext(MainContext);
-    
 
-    return(
+
+    return (
         <SafeAreaView>
             <Text>Configurar Lista</Text>
             <Text>Você está editando a lista {listName} - {listId}</Text>
