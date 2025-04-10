@@ -10,6 +10,8 @@ import CategoriasDividas from '../screens/screensCategoriasDividas/CategoriasDiv
 import CriarCategoriaDivida from '../screens/screensCategoriasDividas/CriarCategoriaDivida'
 import EditarCategoriaDivida from '../screens/screensCategoriasDividas/EditarCategoriaDivida'
 import EditarDivida from '../screens/screensDividas/EditarDivida'
+import CriarItem from '../screens/screensItens/CriarItem'
+import CategoriasItens from '../screens/screensCategoriasItens/CategoriasItens'
 
 import { MainProvider } from '../context/MainContext'
 
@@ -51,6 +53,8 @@ export default function App() {
         <Stack.Screen name ='CriarCategoriaDivida' component={CriarCategoriaDivida} />
         <Stack.Screen name ='EditarCategoriaDivida' component={EditarCategoriaDivida} />
         <Stack.Screen name='EditarDivida' component={EditarDivida} />
+        <Stack.Screen name='CriarItem' component={CriarItem} />
+        <Stack.Screen name='CategoriasItens' component={CategoriasItens} />
       </Stack.Navigator>
     )
   }
