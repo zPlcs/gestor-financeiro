@@ -1,13 +1,14 @@
-import React, { useContext } from 'react'
-import { SafeAreaView, View, Text, TextInput, Button, FlatList } from 'react-native'
+import React, { useContext, useEffect } from 'react'
+import { SafeAreaView, View, Text, TextInput, Button, FlatList, Alert } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MainContext } from '../../context/MainContext'
 import RenderDividas from '../screensDividas/RenderDividas'
 
 export default function ConfigurarLista() {
+
     const navigation = useNavigation();
 
-    const { debt } = useContext(MainContext)
+    const { debt, categoryDebt } = useContext(MainContext)
 
     const route = useRoute();
     const {
@@ -16,6 +17,22 @@ export default function ConfigurarLista() {
     } = route.params;
 
     const debtsDaLista = debt.filter(d => d.list_id === listId);
+    const dividaId = categoryDebt.find(cat => cat.id)
+
+
+    const verify = () => {
+        if(dividaId){
+            handleCriarDividas()
+        } else {
+            Alert.alert('Nenhuma categoria criada', `Para criar uma divida, primeiro crie uma categoria.`, [
+                {
+                    text: 'Ok',
+                    onPress: () => {},
+                    style: 'cancel',
+                }
+            ]);
+        }
+    }
 
     const handleCriarDividas = () => {
         navigation.navigate('CriarDivida', {
@@ -26,6 +43,7 @@ export default function ConfigurarLista() {
 
     const handleCategoriasDividas = () => {
         navigation.navigate('CategoriasDividas')
+        console.log('teste')
     }
 
     const key = (p) => {
@@ -38,7 +56,7 @@ export default function ConfigurarLista() {
             <Text>Você está editando a lista {listName} - {listId}</Text>
             <Button
                 title='Adicionar Divida'
-                onPress={handleCriarDividas}
+                onPress={verify}
             />
             <Button
                 title='Configurar Categorias'
@@ -47,6 +65,7 @@ export default function ConfigurarLista() {
 
             {debtsDaLista.length > 0 ? (
                 <FlatList
+                style={{ height: 400 }}
                     data={debtsDaLista}
                     keyExtractor={key}
                     renderItem={({item}) => <RenderDividas item={item} listId={listId}/>}

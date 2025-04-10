@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { SafeAreaView, Text, Button, TextInput, Platform, View } from 'react-native'
+import { SafeAreaView, Text, Button, TextInput, Platform, View, TouchableOpacity } from 'react-native'
 import { MainContext } from '../../context/MainContext';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -34,10 +34,9 @@ export default function CriarDivida() {
         setShow(true);
     };
 
-
     const handleCriarDivida = async () => {
         try {
-            const novaDivida = { name, value, date, paymentType, installments, category_id: selectedCategory }
+            const novaDivida = { name: name, value: value, date: date.toLocaleDateString(), paymentType, installments, category_id: selectedCategory }
             await criarDivida(listId, novaDivida)
             setName('');
             setValue(0);
@@ -59,12 +58,12 @@ export default function CriarDivida() {
             <Text>Value:</Text>
             <TextInput value={value} onChangeText={setValue} />
             <Text>Data:</Text>
-            <View>
-                <Button onPress={showDatepicker} title="Selecionar Data" />
-            </View>
-            <Text style={{ margin: 20 }}>
-                Data selecionada: {date.toLocaleDateString()}
-            </Text>
+            <TouchableOpacity
+                onPress={showDatepicker}
+                style={{ padding:15 }}
+            >
+                <Text>{date.toLocaleDateString()}</Text>
+            </TouchableOpacity>
             {show && (
                 <DateTimePicker
                     testID="dateTimePicker"
@@ -94,7 +93,6 @@ export default function CriarDivida() {
             <Picker
                 selectedValue={paymentType}
                 onValueChange={setPaymentType}
-                style={{ marginBottom: 16 }}
             >
                 <Picker.Item label="Compra Única" value="Compra Única" />
                 <Picker.Item label="Parcelado" value="Parcelado" />
@@ -105,7 +103,7 @@ export default function CriarDivida() {
                 <View>
                     <Text>Número de Parcelas:</Text>
                     <TextInput
-                        value={installments.toString()}
+                        value={installments}
                         onChangeText={(text) => setInstallments(parseInt(text) || 0)}
                     />
                 </View>
@@ -118,3 +116,100 @@ export default function CriarDivida() {
     );
 }
 
+{/* 
+    import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  Text,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  View
+} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+export const App = () => {
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
+  const [divida, setDivida] = useState([]);
+  const [dataDisplay, setDataDisplay] = useState('20/05/2025'); // Estado para controlar 
+
+  const criarDivida = () => {
+    const novaDivida = { id: new Date().toString(), name: name, date: dataDisplay };
+    setDivida([...divida, novaDivida]);
+    setDate(new Date()) // -> não vai mudar de novo, por que fecharia a página
+    setName('')
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    if (currentDate) {
+      setDate(currentDate);
+      setDataDisplay(currentDate.toLocaleDateString()); // Atualiza o display quando o usuário seleciona
+    }
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+  const rend = ({ item }) => {
+    return(
+      <View>
+        <Text>{item.name}</Text>
+        <Text>{item.date}</Text>
+      </View>
+    );
+  }
+
+  const key = (p) => {
+    return p.id
+  }
+
+  return (
+    <SafeAreaView style={{ padding: 50 }}>
+    <Text>Insira o nome:</Text>
+    <TextInput 
+    value={name}
+    onChangeText={setName}
+    />
+    <Text>Insira a data:</Text>
+      <TouchableOpacity onPress={showDatepicker}>
+        <Text>{dataDisplay}</Text>
+      </TouchableOpacity>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+      <Button title='Submit' onPress={criarDivida}/>
+
+      <FlatList 
+      data={divida}
+      keyExtractor={key}
+      renderItem={rend}
+      />
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+    */}

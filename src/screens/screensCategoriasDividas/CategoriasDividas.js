@@ -1,33 +1,29 @@
 import React, { useContext } from 'react'
-import { SafeAreaView, Text, TextInput, Button } from 'react-native'
+import { SafeAreaView, Text, TextInput, Button, FlatList } from 'react-native'
 import { MainContext } from '../../context/MainContext';
 import { useNavigation } from '@react-navigation/native';
+import RenderCategoriasDividas from './RenderCategoriasDividas';
 
 export default function CategoriasDividas() {
     const navigation = useNavigation();
-    const { criarCategoriaDivida, name, setName, setCategoryDebt, categoryDebt } = useContext(MainContext)
+    const { categoryDebt } = useContext(MainContext)
 
-    const handleCriarCategoriasDividas = async () => {
-        try {
-            const novaCategoria = { name: name }
-            await criarCategoriaDivida(novaCategoria)
-            setName('')
-            navigation.goBack();
-        } catch (error) {
-            console.error('Erro ao criar categoria de divida', error)
-        }
+    const handleCriarCategoriaDivida =  () => {
+        navigation.navigate('CriarCategoriaDivida')
     }
 
     return (
         <SafeAreaView>
             <Text>Categorias Dividas</Text>
-            <TextInput
-                value={name}
-                onChangeText={setName}
-            />
             <Button
                 title='Criar Categoria'
-                onPress={handleCriarCategoriasDividas}
+                onPress={handleCriarCategoriaDivida}
+            />
+
+            <FlatList 
+                data={categoryDebt}
+                keyExtractor={(p) => p.id}
+                renderItem={({item}) => <RenderCategoriasDividas item={item}/>}
             />
         </SafeAreaView>
 

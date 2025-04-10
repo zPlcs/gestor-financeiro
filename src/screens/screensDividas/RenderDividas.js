@@ -1,11 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { View, Text, Button } from 'react-native'
 import { MainContext } from '../../context/MainContext';
 import { useNavigation } from '@react-navigation/native';
 
 export default function RenderDividas({ item }) {
+
+    if (!item) {
+        return <Text>Carregando dívida...</Text>;
+    }
+
     const navigation = useNavigation()
-    const { deletarDivida } = useContext(MainContext)
+    const { deletarDivida, categoryDebt } = useContext(MainContext)
+
+    const category = categoryDebt?.find(cate => cate.id === item.category_id) || { name: 'Sem categoria' }
 
     const handleAtualizarDivida = () => {
         navigation.navigate('EditarDivida', {
@@ -28,11 +35,15 @@ export default function RenderDividas({ item }) {
         }
     }
     return (
-        <View>
-            <Text>{item.list_id}</Text>
+        <View style={{ padding: 20 }}>
             <Text>{item.name}</Text>
             <Text>{item.value}</Text>
             <Text>{item.date}</Text>
+            <Text>{item.paymentType}</Text>
+            {item.paymentType === 'Compra Única' || item.paymentType === 'Recorrente'
+                ? null
+                : <Text>{item.installments}</Text>}
+            <Text>{category.name}</Text>
             <Button onPress={handleAtualizarDivida} title='Editar Divida' />
             <Button onPress={handleDeletarDivida} title='Apagar Divda' />
         </View>

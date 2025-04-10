@@ -7,6 +7,8 @@ import ConfigurarLista from '../screens/screensListas/ConfigurarLista'
 import ConfigurarListaCompras from '../screens/screensListas/ConfigurarListaCompras'
 import CriarDivida from '../screens/screensDividas/CriarDivida'
 import CategoriasDividas from '../screens/screensCategoriasDividas/CategoriasDividas'
+import CriarCategoriaDivida from '../screens/screensCategoriasDividas/CriarCategoriaDivida'
+import EditarCategoriaDivida from '../screens/screensCategoriasDividas/EditarCategoriaDivida'
 import EditarDivida from '../screens/screensDividas/EditarDivida'
 
 import { MainProvider } from '../context/MainContext'
@@ -46,6 +48,8 @@ export default function App() {
         <Stack.Screen name ='ConfigurarListaCompras' component={ConfigurarListaCompras} />
         <Stack.Screen name ='CriarDivida' component={CriarDivida} />
         <Stack.Screen name ='CategoriasDividas' component={CategoriasDividas} />
+        <Stack.Screen name ='CriarCategoriaDivida' component={CriarCategoriaDivida} />
+        <Stack.Screen name ='EditarCategoriaDivida' component={EditarCategoriaDivida} />
         <Stack.Screen name='EditarDivida' component={EditarDivida} />
       </Stack.Navigator>
     )

@@ -1,7 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 
 export const getDBConnection = async () => {
-    return await SQLite.openDatabaseAsync('GenFinances_V2.db');
+    return await SQLite.openDatabaseAsync('GenFinances_V1.db');
 };
 
 export const initDB = async () => {
@@ -185,7 +185,7 @@ export const getDebt = async () => {
                 row.value,
                 row.name,
                 row.date,
-                row.category_id,
+                'categoria:',row.category_id,
                 row.category_name,
                 row.paymentType,
                 row.installments
@@ -405,10 +405,10 @@ export const deleteCategoryItem = async (id) => {
     }
 };
 
-// DELETE DATABASE (DONT USE IN CURRENT DATABASE => GenFinances_V4)
+// DELETE DATABASE (DONT USE IN CURRENT DATABASE => GenFinances_V5)
 export const deleteDatabase = async () => {
     try {
-        await SQLite.deleteDatabaseAsync('GenFinances_V4.db');
+        await SQLite.deleteDatabaseAsync('GenFinances_V5.db');
         console.log('Banco de dados deletado');
     } catch (error) {
         console.error('Erro ao deletar banco de dados:', error);

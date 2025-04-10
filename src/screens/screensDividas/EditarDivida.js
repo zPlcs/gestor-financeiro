@@ -1,4 +1,4 @@
-import react, { useState, useContext } from 'react'
+import react, { useState, useContext, useEffect } from 'react'
 import { SafeAreaView, Text, TextInput, Button, View, TouchableOpacity, Platform } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MainContext } from '../../context/MainContext';
@@ -6,6 +6,12 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function EditarDivida() {
+    useEffect(()=>{
+        setDataDisplay(previousDate);
+        console.log('Carregou')
+    },[])
+
+
     const navigation = useNavigation();
     const { atualizarDivida, categoryDebt } = useContext(MainContext);
 
@@ -23,29 +29,36 @@ export default function EditarDivida() {
 
     const [name, setName] = useState(previousName);
     const [value, setValue] = useState(previousValue.toString());
-    const [date, setDate] = useState(new Date(previousDate));
+    const [date, setDate] = useState(new Date());
     const [paymentType, setPaymentType] = useState(previousPaymentType || 'Compra Única');
     const [installments, setInstallments] = useState(previousInstallments || 0);
     const [selectedCategory, setSelectedCategory] = useState(previousCategory_id || null);
     const [showDatePicker, setShowDatePicker] = useState(false);
+    const [dataDisplay, setDataDisplay] = useState(previousDate); // Estado para controlar
 
 
     const onChangeDate = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+        const currentDate = selectedDate;
         setShowDatePicker(Platform.OS === 'ios'); // Mantém aberto no iOS, fecha no Android
-        setDate(currentDate);
-        setNewDate(currentDate)
-    };
+        if (currentDate) {
+            setDate(currentDate);
+            setDataDisplay(currentDate.toLocaleDateString()); // Atualiza o display quando o usuário seleciona
+          }
+        };
 
     const showDatepicker = () => {
         setShowDatePicker(true);
     };
 
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+      };
 
 
     const handleAtualizarDivida = async () => {
         try {
-            const novaDivida = { name: name || previousName, value: parseFloat(value) || previousValue, date: newDate || previousDate, paymentType: paymentType || previousPaymentType, installments: paymentType === 'Parcelado' ? (parseInt(installments) || previousInstallments) : 1, category_id: selectedCategory || previousCategory_id }
+            const novaDivida = { name: name || previousName, value: parseFloat(value) || previousValue, date: dataDisplay || previousDate, paymentType: paymentType || previousPaymentType, installments: paymentType === 'Parcelado' ? (parseInt(installments) || previousInstallments) : 1, category_id: selectedCategory || previousCategory_id }
             await atualizarDivida(previousId, novaDivida);
             navigation.goBack();
         } catch (error) {
@@ -64,7 +77,7 @@ export default function EditarDivida() {
             <TouchableOpacity
                 onPress={showDatepicker}
             >
-                <Text>{newDate.toLocaleDateString()}</Text>
+                <Text>{dataDisplay}</Text>
             </TouchableOpacity>
 
             {showDatePicker && (
@@ -118,100 +131,3 @@ export default function EditarDivida() {
     );
 }
 
-{/* 
-    import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  Text,
-  Button,
-  TextInput,
-  TouchableOpacity,
-  FlatList,
-  View
-} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
-
-export const App = () => {
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-  const [name, setName] = useState('');
-  const [divida, setDivida] = useState([]);
-  const [dataDisplay, setDataDisplay] = useState('20/05/2025'); // Estado para controlar 
-
-  const criarDivida = () => {
-    const novaDivida = { id: new Date().toString(), name: name, date: dataDisplay };
-    setDivida([...divida, novaDivida]);
-    setDate(new Date()) // -> não vai mudar de novo, por que fecharia a página
-    setName('')
-  };
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    if (currentDate) {
-      setDate(currentDate);
-      setDataDisplay(currentDate.toLocaleDateString()); // Atualiza o display quando o usuário seleciona
-    }
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
-  const rend = ({ item }) => {
-    return(
-      <View>
-        <Text>{item.name}</Text>
-        <Text>{item.date}</Text>
-      </View>
-    );
-  }
-
-  const key = (p) => {
-    return p.id
-  }
-
-  return (
-    <SafeAreaView style={{ padding: 50 }}>
-    <Text>Insira o nome:</Text>
-    <TextInput 
-    value={name}
-    onChangeText={setName}
-    />
-    <Text>Insira a data:</Text>
-      <TouchableOpacity onPress={showDatepicker}>
-        <Text>{dataDisplay}</Text>
-      </TouchableOpacity>
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
-      <Button title='Submit' onPress={criarDivida}/>
-
-      <FlatList 
-      data={divida}
-      keyExtractor={key}
-      renderItem={rend}
-      />
-    </SafeAreaView>
-  );
-};
-
-export default App;
-
-    */}

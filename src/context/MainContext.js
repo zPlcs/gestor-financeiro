@@ -41,8 +41,6 @@ export const MainContext = createContext();
 
 export function MainProvider({ children }) {
 
-
-    
     useEffect(() => {
         const loadData = async () => {
             await initDB();
@@ -58,7 +56,6 @@ export function MainProvider({ children }) {
             setItem(itemsFromDB);
             setCategoryDebt(categorysDebtFromDB);
             setCategoryItem(categorysItemFromDB);
-            console.log(categoryDebt)
         };
         loadData();
     }, []);

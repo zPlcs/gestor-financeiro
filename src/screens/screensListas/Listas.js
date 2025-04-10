@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { SafeAreaView, Text, Button, FlatList, View } from 'react-native'
+import { SafeAreaView, Text, Button, FlatList, View, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 import { MainContext } from '../../context/MainContext'
@@ -16,6 +16,8 @@ export default function Listas() {
         return p.id
     }
 
+
+
     const rend = ({ item }) => {
         const handleApagar = async () => {
             try {
@@ -25,21 +27,34 @@ export default function Listas() {
             }
         }
 
+        const createTwoButtonAlert = () => {
+            Alert.alert('Apagar Lista', `Deseja mesmo apagar a lista "${item.name}"?`, [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                { text: 'Apagar', onPress: handleApagar },
+            ]);
+        }
         const handleConfigurar = () => {
-            if(item.template === 'Simples' || 'Mensal'){
-                navigation.navigate('ConfigurarLista',{
+            const state = item.template
+            console.log(state)
+            if (item.template === 'Simples' || item.template === 'Mensal') {
+                navigation.navigate('ConfigurarLista', {
                     listId: item.id,
                     listName: item.name
                 })
+                console.log(state)
             } else {
-                navigation.navigate('ConfigurarListaCompras',{
+                navigation.navigate('ConfigurarListaCompras', {
                     listId: item.id,
                     listName: item.name
                 })
             }
         }
 
-        
+
 
         return (
             <View>
@@ -51,7 +66,7 @@ export default function Listas() {
                 />
                 <Button
                     title='Apagar Lista'
-                    onPress={handleApagar}
+                    onPress={createTwoButtonAlert}
                 />
                 <Button
                     title='Configurar Lista'
