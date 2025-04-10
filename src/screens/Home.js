@@ -1,40 +1,22 @@
-import React, { useContext } from 'react'
-import { View, Text, FlatList, Button } from 'react-native'
-import { MainContext } from '../context/MainContext'
-import DividaItem from '../components/DividaItem'
-import HomeHeader from '../components/HomeHeader'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation } from '@react-navigation/native';
+import React, {useContext} from 'react'
+import { SafeAreaView, Text, Button } from 'react-native'
+import { MainContext } from '../context/MainContext';
 
 export default function Home() {
-    const navigation = useNavigation();
+    const{ deletarBD } = useContext(MainContext)
 
-    const navCriarCategoria = () => {
-        navigation.navigate('CriarCategoria')
+    const handleDeletarBD = async () =>{
+        try{
+            await deletarBD()
+        } catch(error){
+            console.error('Erro ao tentar deletar banco de dados', error)
+        }
     }
-
-    const navCriarDivida = () => {
-        navigation.navigate('CriarDivida')
-    }
-    const {
-        dividas
-    } = useContext(MainContext);
 
     return (
         <SafeAreaView>
-            <HomeHeader />
-            <Button title='Go to Criar Categoria' onPress={nav} />
-            <Button title='Go to Criar Categoria' onPress={navCriarCategoria}/>
-            <Button title='Criar Divida' onPress={navCriarDivida}/>
-            <Button title='Criar Lista' onPress={() => {}}/>
-            <Button title='Criar Item' onPress={() => {}}/>
-
-            <Text>HomePage</Text>
-            <FlatList
-                data={dividas}
-                keyExtractor={(p) => p.id}
-                renderItem={({ item }) => <DividaItem item={item} />}
-            />
+            <Text>Home</Text>
+            <Button title='Apagar banco de dados' onPress={handleDeletarBD}/>
         </SafeAreaView>
     );
 }
