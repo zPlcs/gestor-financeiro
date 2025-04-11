@@ -225,7 +225,7 @@ export function MainProvider({ children }) {
     const atualizarCategoriaItem = async (id, novaCategoriaItem) => {
         try {
             await updateCategoryItem(id, novaCategoriaItem);
-            const categoriaItemAtualizada = awaitgetCategoryItem();
+            const categoriaItemAtualizada = await getCategoryItem();
             setCategoryItem(categoriaItemAtualizada);
         } catch (error) {
             console.error('Erro ao atualizar categoria do item', error)
@@ -235,7 +235,7 @@ export function MainProvider({ children }) {
     const deletarCategoriaItem = async (id) => {
         try {
             await deleteCategoryItem(id);
-            const categoriaItemAtualizada = awaitgetCategoryItem();
+            const categoriaItemAtualizada = await getCategoryItem();
             setCategoryItem(categoriaItemAtualizada);
         } catch (error) {
             console.error('Erro ao deletar categoria do item', error)

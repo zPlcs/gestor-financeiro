@@ -14,6 +14,7 @@ export default function ConfigurarLista() {
     const {
         listId,
         listName,
+        listTemplate
     } = route.params;
 
     const debtsDaLista = debt.filter(d => d.list_id === listId);
@@ -53,7 +54,7 @@ export default function ConfigurarLista() {
     return (
         <SafeAreaView>
             <Text>Configurar Lista</Text>
-            <Text>Você está editando a lista {listName} - {listId}</Text>
+            <Text>Você está editando a lista {listName} - {listId} - {listTemplate}</Text>
             <Button
                 title='Adicionar Divida'
                 onPress={verify}

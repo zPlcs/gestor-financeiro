@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { MainContext } from '../../context/MainContext'
 
 export default function Listas() {
-    const { list, deletarLista, categoryDebt, divida } = useContext(MainContext);
+    const { list, deletarLista } = useContext(MainContext);
     const navigation = useNavigation();
 
     const nav = () => {
@@ -15,8 +15,6 @@ export default function Listas() {
     const key = (p) => {
         return p.id
     }
-
-
 
     const rend = ({ item }) => {
         const handleApagar = async () => {
@@ -38,22 +36,20 @@ export default function Listas() {
             ]);
         }
         const handleConfigurar = () => {
-            const state = item.template
-            console.log(state)
-            if (item.template === 'Simples' || item.template === 'Mensal') {
-                navigation.navigate('ConfigurarLista', {
-                    listId: item.id,
-                    listName: item.name
-                })
-                console.log(state)
-            } else {
-                navigation.navigate('ConfigurarListaCompras', {
-                    listId: item.id,
-                    listName: item.name
-                })
-            }
+                navigation.navigate('ConfigurarLista', { 
+                    listId: item.id, 
+                    listName: item.name,
+                    listTemplate: item.template
+                });
         }
 
+        const handleConfigurarCompras = () => {
+            navigation.navigate('ConfigurarListaCompras', { 
+                listId: item.id, 
+                listName: item.name,
+                listTemplate: item.template
+            });
+        }
 
 
         return (
@@ -68,10 +64,17 @@ export default function Listas() {
                     title='Apagar Lista'
                     onPress={createTwoButtonAlert}
                 />
-                <Button
-                    title='Configurar Lista'
-                    onPress={handleConfigurar}
-                />
+                {item.template === 'Simples' || item.template === 'Mensal' ? 
+                            <Button
+                            title='Configurar Lista'
+                            onPress={handleConfigurar}
+                        />
+                        :
+                        <Button
+                        title='Configurars Lista'
+                        onPress={handleConfigurarCompras}
+                    />    
+            }
             </View>
 
         );

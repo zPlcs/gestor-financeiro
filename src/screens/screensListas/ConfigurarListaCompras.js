@@ -4,21 +4,20 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { MainContext } from '../../context/MainContext'
 import RenderItens from '../screensItens/RenderItens'
 
-export default function ConfigurarLista() {
+export default function ConfigurarListaCompras() {
 
     const navigation = useNavigation();
 
-    const { debt, categoryDebt, item, categoryItem } = useContext(MainContext)
+    const { item, categoryItem } = useContext(MainContext)
 
     const route = useRoute();
     const {
         listId,
         listName,
+        listTemplate
     } = route.params;
 
-    const itensDaLista = item.filter(d => d.list_id === listId);
     const itemId = categoryItem.find(cat => cat.id)
-
 
     const handleCriarItem = () => {
         if (itemId) {
@@ -52,17 +51,17 @@ export default function ConfigurarLista() {
     return (
         <SafeAreaView>
             <Text>Configurar Lista</Text>
-            <Text>Você está editando a lista {listName} - {listId}</Text>
+            <Text>Você está editando a lista {listName} - {listId} - {listTemplate}</Text>
             <Button
-                title='Adicionar Divida'
+                title='Adicionar Item'
                 onPress={handleCriarItem}
             />
             <Button
-                title='Configurar Categorias'
+                title='Configurar Categorias de itens'
                 onPress={handleCategoriasItens}
             />
 
-            {itensDaLista.length > 0 ? (
+            {item ? (
                 <FlatList
                     style={{ height: 400 }}
                     data={itensDaLista}
