@@ -8,7 +8,7 @@ export default function ConfigurarListaCompras() {
 
     const navigation = useNavigation();
 
-    const { item, categoryItem } = useContext(MainContext)
+    const { items, categoryItem } = useContext(MainContext)
 
     const route = useRoute();
     const {
@@ -61,10 +61,10 @@ export default function ConfigurarListaCompras() {
                 onPress={handleCategoriasItens}
             />
 
-            {item ? (
+            {items ? (
                 <FlatList
                     style={{ height: 400 }}
-                    data={itensDaLista}
+                    data={items}
                     keyExtractor={key}
                     renderItem={({ item }) => <RenderItens item={item} listId={listId} />}
                 />

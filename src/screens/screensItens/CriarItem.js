@@ -27,7 +27,7 @@ export default function CriarDivida() {
             await criarItem(listId, novoItem)
             setName('');
             setValue(0);
-            setQuantity(1)
+            setQuantity(1);
             setSelectedCategory(null);
             navigation.goBack()
         } catch (error) {

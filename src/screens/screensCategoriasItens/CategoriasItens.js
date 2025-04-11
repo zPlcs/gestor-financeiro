@@ -9,7 +9,7 @@ export default function CategoriasDividas() {
     const { categoryItem } = useContext(MainContext)
 
     const handleCriarCategoriaDivida = () => {
-        navigation.navigate('CriarCategoriaDivida')
+        navigation.navigate('CriarCategoriaItem')
     }
 
     return (

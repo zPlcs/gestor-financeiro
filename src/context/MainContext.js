@@ -53,7 +53,7 @@ export function MainProvider({ children }) {
            
             setList(listsFromDB);
             setDebt(debtsFromDB);
-            setItem(itemsFromDB);
+            setItems(itemsFromDB);
             setCategoryDebt(categorysDebtFromDB);
             setCategoryItem(categorysItemFromDB);
         };
@@ -68,7 +68,7 @@ export function MainProvider({ children }) {
     // ARRAYS
     const [list, setList] = useState([]);
     const [debt, setDebt] = useState([]);
-    const [item, setItem] = useState([]);
+    const [items, setItems] = useState([]);
     const [categoryDebt, setCategoryDebt] = useState([]);
     const [categoryItem, setCategoryItem] = useState([]);
     const [categoryItemId, setCategoryItemId] = useState([])
@@ -147,7 +147,7 @@ export function MainProvider({ children }) {
         try {
             await createItem(listaId, novoItem);
             const itemAtualizado = await getItem();
-            setItem(itemAtualizado)
+            setItems(itemAtualizado);
         } catch (error) {
             console.error('Erro ao criar item', error)
         }
@@ -157,7 +157,7 @@ export function MainProvider({ children }) {
         try {
             await updateItem(id, novoItem);
             const itemAtualizado = await getItem();
-            setItem(itemAtualizado);
+            setItems(itemAtualizado);
         } catch (error) {
             console.error('Erro ao atualizar item', error)
         }
@@ -167,7 +167,7 @@ export function MainProvider({ children }) {
         try {
             await deleteItem(id);
             const itemAtualizado = await getItem();
-            setItem(itemAtualizado);
+            setItems(itemAtualizado);
         } catch (error) {
             console.error('Erro ao deletar item', error)
         }
@@ -326,7 +326,7 @@ export function MainProvider({ children }) {
             // ARRAYS
             list, setList,
             debt, setDebt,
-            item, setItem,
+            items, setItems,
             categoryDebt, setCategoryDebt,
             categoryItem, setCategoryItem,
         }}>

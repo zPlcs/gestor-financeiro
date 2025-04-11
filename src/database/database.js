@@ -242,14 +242,14 @@ export const deleteDebt = async (id) => {
 // CRUD <DIVIDAS>
 
 // CRUD <ITENS>
-export const createItem = async (item) => {
+export const createItem = async (listId, item) => {
     try {
         const db = await getDBConnection();
         const result = await db.runAsync(
             `
-            INSERT INTO item (listId, name, value, category_id, checked, quantity) 
+            INSERT INTO item (list_id, name, value, category_id, checked, quantity) 
             VALUES (?, ?, ?, ?, ?, ?)`,
-            [item.listId, item.name, item.value, item.category_id, item.checked, item.quantity]
+            [listId, item.name, item.value, item.category_id, item.checked, item.quantity]
         );
         return result.lastInsertRowId;
     } catch (error) {
@@ -263,7 +263,7 @@ export const getItem = async () => {
         const allRows = await db.getAllAsync(`SELECT * FROM item`);
         console.log('Itens carregados.');
         for (const row of allRows) {
-            console.log(row.id, row.listId, row.name, row.value, row.category_id, row.checked, row.quantity);
+            console.log(row.id, row.list_id, row.name, row.value, row.category_id, row.checked, row.quantity);
         }
     } catch (error) {
         console.error('Erro ao carregar itens', error);

@@ -10,9 +10,9 @@ export default function RenderItens({ item }) {
     }
 
     const navigation = useNavigation()
-    const { deletarDivida, categoryDebt } = useContext(MainContext)
+    const { deletarDivida, categoryItem } = useContext(MainContext)
 
-    const category = categoryDebt?.find(cate => cate.id === item.category_id) || { name: 'Sem categoria' }
+    const category = categoryItem?.find(cate => cate.id === item.category_id) || { name: 'Sem categoria' }
 
     const handleAtualizarDivida = () => {
         navigation.navigate('EditarDivida', {
@@ -38,11 +38,6 @@ export default function RenderItens({ item }) {
         <View style={{ padding: 20 }}>
             <Text>{item.name}</Text>
             <Text>{item.value}</Text>
-            <Text>{item.date}</Text>
-            <Text>{item.paymentType}</Text>
-            {item.paymentType === 'Compra Única' || item.paymentType === 'Recorrente'
-                ? null
-                : <Text>{item.installments}</Text>}
             <Text>{category.name}</Text>
             <Button onPress={handleAtualizarDivida} title='Editar Divida' />
             <Button onPress={handleDeletarDivida} title='Apagar Divda' />

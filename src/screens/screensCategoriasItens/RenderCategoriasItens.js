@@ -5,7 +5,7 @@ import { MainContext } from '../../context/MainContext';
 
 export default function RenderCategoriasDividas({ item }) {
 
-    const { deletarCategoriaDivida, debt } = useContext(MainContext)
+    const { deletarCategoriaDivida, debt, items } = useContext(MainContext)
 
     const navigation = useNavigation();
     const handleAtualizarCategoriaDivida = () => {

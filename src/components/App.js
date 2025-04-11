@@ -12,6 +12,7 @@ import EditarCategoriaDivida from '../screens/screensCategoriasDividas/EditarCat
 import EditarDivida from '../screens/screensDividas/EditarDivida'
 import CriarItem from '../screens/screensItens/CriarItem'
 import CategoriasItens from '../screens/screensCategoriasItens/CategoriasItens'
+import CriarCategoriaItem from '../screens/screensCategoriasItens/CriarCategoriaItem'
 
 import { MainProvider } from '../context/MainContext'
 
@@ -55,6 +56,7 @@ export default function App() {
         <Stack.Screen name='EditarDivida' component={EditarDivida} />
         <Stack.Screen name='CriarItem' component={CriarItem} />
         <Stack.Screen name='CategoriasItens' component={CategoriasItens} />
+        <Stack.Screen name='CriarCategoriaItem' component={CriarCategoriaItem} />
       </Stack.Navigator>
     )
   }
